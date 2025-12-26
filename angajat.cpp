@@ -1,4 +1,7 @@
 #include "angajat.h"
+
+    int angajat::ID = 0;
+
 int angajat::getTimp_lucrat() const
     {
         int day = std::stoi(data_A.substr(0,2));
@@ -15,7 +18,6 @@ int angajat::getTimp_lucrat() const
         datetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;
         datetime.tm_isdst = -1;
         angajare = mktime(&datetime);
-        std::cout << asctime(&datetime);
         int diff = difftime(angajare, now);
         return diff/31536000;
     }

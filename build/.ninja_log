@@ -1,0 +1,14 @@
+# ninja log v5
+67	2873	1766771045794331719	CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o	4221660754f19dd2
+6	749	1766772369595046255	Qt6Hello_autogen/timestamp	cab44146264cea89
+6	749	1766772369595046255	Qt6Hello_autogen/mocs_compilation.cpp	cab44146264cea89
+2874	3625	1766771046534982220	Qt6Hello	6ea7da69d5f29ce3
+6	749	1766772369595046255	/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/timestamp	cab44146264cea89
+6	749	1766772369595046255	/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/mocs_compilation.cpp	cab44146264cea89
+750	5944	1766772374817201604	CMakeFiles/Qt6Hello.dir/Qt6Hello_autogen/mocs_compilation.cpp.o	e0b3701d2ff6b4c4
+750	5943	1766772374809867116	CMakeFiles/Qt6Hello.dir/main2.cpp.o	9316bd28d939c5cc
+12	117	1766772478038441827	Qt6Hello_autogen/timestamp	cab44146264cea89
+12	117	1766772478038441827	Qt6Hello_autogen/mocs_compilation.cpp	cab44146264cea89
+12	117	1766772478038441827	/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/timestamp	cab44146264cea89
+12	117	1766772478038441827	/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/mocs_compilation.cpp	cab44146264cea89
+121	8995	1766772486904116413	CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o	4221660754f19dd2
