@@ -1,6 +1,6 @@
 #include "angajat.h"
+    int angajat::IDnext = 0;
 
-    int angajat::ID = 0;
 
 int angajat::getTimp_lucrat() const
     {

@@ -11,7 +11,7 @@ class TV: public electrocasnice
             double Pret,
             double Diagonala     
         ):electrocasnice(Marca,Model,An,Pret),diagonala{Diagonala}{}
-    void afisare(std::ostream& dev)
+    void afisare(std::ostream& dev) const override
     {
         electrocasnice::afisare(dev);
         dev<<diagonala<<std::endl;

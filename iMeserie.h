@@ -1,22 +1,25 @@
 #include "angajat.h"
 #include <vector>
 #include <ctime>
+#include <map>
+#include<set>
 #pragma once
 
 
 class tehnician : public angajat
 {
 private:
-    std::vector<std::string> tipuriR;
-    std::vector<std::string> marciR;
+    std::map<std::string, std::set<std::string>> repara;
     double pretR = 0.0;
+    int lucrari=0;
 
 public:
-    tehnician(std::string Nume, std::string Prenume,
+    tehnician(std::string Post,
+              std::string Nume, std::string Prenume,
               std::string cnp,
               std::string data,
-              std::string oras, std::vector<std::string> tipuri,
-              std::vector<std::string> marci): angajat(Nume,Prenume,cnp,data,oras), tipuriR{tipuri}, marciR{marci}
+              std::string oras, std::map<std::string, std::set<std::string>> Repara, int Lucrari): 
+              angajat(Post,Nume,Prenume,cnp,data,oras),repara{Repara},lucrari{Lucrari}
               {
               }
               
@@ -27,28 +30,35 @@ public:
     }
     void afisare(std::ostream& dev)const override
     {
-        dev<<ID<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
+        dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<lucrari<<std::endl;
         dev<<"tipuri si marci: ";
-        auto it1 = tipuriR.begin();
-        auto it2 = marciR.begin();
+        for (auto it = repara.begin(); it != repara.end(); ++it) {
+            const std::string& tip = it->first;
+            const std::set<std::string>& marci = it->second;
 
-        for (; it1 != tipuriR.end() && it2 != marciR.end(); ++it1, ++it2)
-        {
-            dev << *it1 << " " << *it2;
+            dev << tip << ": ";
+            for (const auto& marca : marci) {
+                dev << marca << " ";
+            }
+            dev << "\n";
         }
+
 
         dev<<std::endl;
         dev<<"salariu: "<<calcS()<<std::endl;
     }
+    void addLucrare(){lucrari++;}
+    int getLucrare()const{return lucrari;}
 };
 
 class supervizor : public angajat
 {
 public:
-supervizor(   std::string Nume, std::string Prenume,
+supervizor(   std::string Post,
+              std::string Nume, std::string Prenume,
               std::string cnp,
               std::string data,
-              std::string oras): angajat(Nume,Prenume,cnp,data,oras)
+              std::string oras): angajat(Post,Nume,Prenume,cnp,data,oras)
               {
               }    
 double calcS() const override
@@ -57,7 +67,7 @@ double calcS() const override
     }
     void afisare(std::ostream& dev)const override
     {
-        dev<<ID<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
+        dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
         dev<<"salariu: "<<calcS()<<std::endl;
     }
 };
@@ -68,10 +78,10 @@ private:
     std::vector<int> IDuri;
 
 public:
-receptioner(std::string Nume, std::string Prenume,
+receptioner(std::string Post,std::string Nume, std::string Prenume,
               std::string cnp,
               std::string data,
-              std::string oras, std::vector<int> iduri): angajat(Nume,Prenume,cnp,data,oras), IDuri{iduri}
+              std::string oras, std::vector<int> iduri): angajat(Post,Nume,Prenume,cnp,data,oras), IDuri{iduri}
               {
               }
     double calcS() const override
@@ -80,7 +90,7 @@ receptioner(std::string Nume, std::string Prenume,
     }
     void afisare(std::ostream& dev)const override
     {
-        dev<<ID<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
+        dev<<getID()<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
         dev<<"iduri: ";
         auto it1 = IDuri.begin();
 

@@ -1,12 +1,17 @@
-/*#include <iostream>
+#include <iostream>
 #include <exception>
 #include "lucruAngajati.h"
 #include "service.h"
+#include<fstream>
+#include<sstream>
+#include "frigider.h"
+#include "TV.h"
+#include "masinaSpalat.h"
 
 service* service::instance=nullptr;
 
 int main() {
-     EmployeeData d{
+     /*EmployeeData d{
             "Popa", "Iona", "5050603170065",
             "10/03/2031", "Cluj",
             {"TV"}, {"LG"}, {1,3}
@@ -42,149 +47,137 @@ int main() {
                         std::cout<<(it3)<<" ";
                     }
                 }
-        }
+        }*/
+
+        std::ifstream fin("cereri.csv");
+        std::ifstream fin2("angajati.csv");
+        std::ofstream fout("cereriInvalide.csv"); 
+        std::string linie;
+        service s;
+
+        EmployeeData d;
+        std::map<std::string, std::set<std::string>> Repara;
+        while(std::getline(fin2, linie))
+        {
+            std::stringstream ss(linie);
+            std::string post;
+            std::getline(ss,post,',');
+            std::string nume;
+            std::getline(ss,nume,',');
+            std::string prenume;
+            std::getline(ss,prenume,',');
+            std::string cnp;
+            std::getline(ss,cnp,',');
+            std::string time;
+            std::getline(ss,time,',');
+            std::string oras;
+            std::getline(ss,oras,',');
+            std::string reparatii;
+            std::getline(ss,reparatii,',');
+            std::string Lucrari;
+            std::getline(ss,Lucrari,',');
+            std::string iduri;
+            std::getline(ss,iduri,','); 
+                   
+            std::stringstream ss2(reparatii);
+            std::string tipMarca;
+            std::string marca, tip;
+            while(std::getline(ss2,tipMarca,' '))
+            {
+                std::stringstream ss3(tipMarca);
+                std::getline(ss3,tip,';');
+                std::getline(ss3,marca,';');
+                Repara[tip].insert(marca);
+            }
+            std::stringstream ss4(iduri);
+            std::string id;
+            std::vector <int>idI;
+            while(std::getline(ss4,id,';'))
+            {
+                idI.push_back(std::stoi(id));
+            }
+            int lucrariI;
+            if(!(Lucrari.empty()))
+                lucrariI=std::stoi(Lucrari);
+            d.Post=post;
+            d.Nume=nume;
+            d.Prenume=prenume;
+            d.CNP=cnp;
+            d.data_A=time;
+            d.IDuri=idI;
+            d.lucrari=lucrariI;
+            d.oras_D=oras;
+            d.repara=Repara;
+            //std::cout<<d.Nume<<" "<<d.Prenume<<" "<<d.CNP<<" "<<d.data_A<<" "<<d.lucrari<<" "<<d.oras_D<<" ";
+            for(auto i:d.IDuri)
+            {
+                //std::cout<<(i);
+            }
+            for(auto i:d.repara)
+            {
+                //std::cout<<i.first<<" ";
+                for(auto y:i.second)
+                {
+                    //std::cout<<y<<" ";
+                }
+                //std::cout<<std::endl;
+            }
+            if(post=="tehnician")
+            {
+                s.angajareTehnician(d);
+            }
+            else if(post=="receptioner")
+            {
+                s.angajareReceptioner(d);
+            }
+            else
+            {
+                s.angajareSupervizor(d);
+            }
+        }    
+        s.concediere(2);
+        s.afisareAngajati();
+        auto tehnicieni=s.getPtrteh();
+        std::sort(tehnicieni.begin(), tehnicieni.end(),[](tehnician* a, tehnician*b)
+        {
+            return a->getLucrare()<b->getLucrare();
+        });
+        for (auto& x : tehnicieni)
+            x->afisare(std::cout);
+        /*while(std::getline(fin, linie))
+        {
+            std::stringstream ss(linie);
+            std::string id;
+            std::getline(ss,id,',');
+            std::string marca;
+            std::getline(ss,marca,',');
+            std::string model;
+            std::getline(ss,model,',');
+            std::string an;
+            std::getline(ss,an,',');
+            std::string pret;
+            std::getline(ss,pret,',');
+            std::string time;
+            std::getline(ss,time,',');
+            std::string complexitate;
+            std::getline(ss,complexitate,',');
+            int anul=std::stoi(an);
+            double pretul=std::stod(pret);   
+            std::unique_ptr<electrocasnice> e=std::make_unique<electrocasnice>(marca,model,anul,pretul); 
+            std::cout<<complexitate;       
+            const char* formatPattern = "%d/%m/%Y %H:%M:%S";  
+
+            // Holds date-time components
+            tm timeParts = {};
+            timeParts.tm_isdst = -1;
+            // Parse string
+            strptime(time.c_str(), formatPattern, &timeParts);  
+
+            // Convert to timestamp for easy use
+            time_t timestamp = mktime(&timeParts);
+            std::cout<<id<<" "<<marca<<" "<<model<<" "<<an<<" "<<pret<<" "<<ctime(&timestamp)<<" "<<complexitate<<std::endl;  
+            
+        }*/
     return 0;
 }
-*/
-// mainwindow.cpp
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
 
-#include <QPushButton>
-#include <QMenu>
-#include <QAction>
-#include <QLineEdit>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QDebug>
-#include <iostream>
-#include <exception>
-#include "lucruAngajati.h"
-#include "service.h"
-
-service* service::instance=nullptr;
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-    ui->setupUi(this);
-    EmployeeData d;
-    std::vector<std::unique_ptr<angajat>> angajati;
-    std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::string>>> posReparatii;
-    // Dacă nu ai centralWidget în .ui, creează unul:
-    if (!centralWidget()) {
-        setCentralWidget(new QWidget(this));
-    }
-
-    auto* root = new QVBoxLayout(centralWidget());
-    root->setContentsMargins(16, 16, 16, 16);
-    root->setSpacing(10);
-
-    // Buton principal
-    auto* btnAdauga = new QPushButton("Adaugă angajat", this);
-
-    // Meniu dropdown
-    auto* menu = new QMenu(this);
-    auto* actTehnician   = menu->addAction("Tehnician");
-    auto* actSupervizor  = menu->addAction("Supervizor");
-    auto* actReceptioner = menu->addAction("Recepționer");
-
-    btnAdauga->setMenu(menu);
-
-    // Label informativ
-    lblInfo = new QLabel("Alege un tip de angajat.", this);
-
-    // Input pentru date (ascuns până alegi tipul)
-    editInput = new QLineEdit(this);
-    editInput->setPlaceholderText("Date separate prin ;");
-    editInput->hide();
-
-    // Confirmare (ascuns până alegi tipul)
-    btnConfirm = new QPushButton("Confirmă", this);
-    btnConfirm->hide();
-
-    // Layout
-    root->addWidget(btnAdauga);
-    root->addWidget(lblInfo);
-    root->addWidget(editInput);
-    root->addWidget(btnConfirm);
-    root->addStretch(1);
-
-    // Funcție locală: când selectezi tipul
-    auto onTipSelectat = [this](const QString& tip) {
-        tipAngajat = tip;
-        lblInfo->setText("Tip ales: " + tipAngajat);
-
-        // Poți schimba aici formatul exact pe care îl aștepți
-        if (tipAngajat == "Tehnician") {
-            editInput->setPlaceholderText("Tehnician (7): c1;c2;c3;c4;c5;c6;c7");
-        } else if (tipAngajat == "Supervizor") {
-            editInput->setPlaceholderText("Supervizor (5): c1;c2;c3;c4;c5");
-        } else if (tipAngajat == "Recepționer") {
-            editInput->setPlaceholderText("Recepționer (6): c1;c2;c3;c4;c5;c6");
-        } else {
-            editInput->setPlaceholderText("Date separate prin ;");
-        }
-
-        editInput->clear();
-        editInput->show();
-        btnConfirm->show();
-        editInput->setFocus();
-    };
-
-    connect(actTehnician, &QAction::triggered, this, [=]() { onTipSelectat("Tehnician"); });
-    connect(actSupervizor, &QAction::triggered, this, [=]() { onTipSelectat("Supervizor"); });
-    connect(actReceptioner, &QAction::triggered, this, [=]() { onTipSelectat("Recepționer"); });
-
-    // Confirmare: parsare + validare + afișare în terminal
-    connect(btnConfirm, &QPushButton::clicked, this, [this]() {
-        QStringList campuri = input.split(";", Qt::KeepEmptyParts);
-for (QString& c : campuri) c = c.trimmed();
-
-int expected = -1;
-if (tipAngajat == "Tehnician") expected = 7;
-else if (tipAngajat == "Supervizor") expected = 5;
-else if (tipAngajat == "Recepționer") expected = 6;
-
-if (campuri.size() != expected) {
-    lblInfo->setText("Eroare: " + tipAngajat + " trebuie să aibă exact "
-                     + QString::number(expected) + " câmpuri separate prin ;");
-    return;
-}
-
-// câmpuri comune (presupunând că în EmployeeData sunt std::string)
-d.Nume   = campuri[0].toStdString();
-d.Prenume= campuri[1].toStdString();
-d.CNP    = campuri[2].toStdString();
-d.data_A = campuri[3].toStdString();
-d.oras_D = campuri[4].toStdString();
-
-if (tipAngajat == "Tehnician") {
-    // aici presupun că tipuriR și marciR sunt vector<string>
-    d.tipuriR = splitToStdVector(campuri[5], ',');  // ex: "TV, Frigider"
-    d.marciR  = splitToStdVector(campuri[6], ',');  // ex: "LG, Samsung"
-}
-
-if (tipAngajat == "Recepționer") {
-    // dacă IDuri e vector<int>, parsează așa:
-    // ex: campuri[5] = "1,3,10"
-    QStringList ids = campuri[5].split(",", Qt::SkipEmptyParts);
-    d.IDuri.clear();
-    for (QString id : ids) {
-        bool ok = false;
-        int val = id.trimmed().toInt(&ok);
-        if (!ok) { lblInfo->setText("Eroare: ID-uri invalide."); return; }
-        d.IDuri.push_back(val);
-    }
-}
-angajare(d,"tehnician",angajati);
-    for (const auto& p : angajati) {      // iterare prin referință
-    if (p) p->afisare(std::cout);     // p e unique_ptr, folosești ->
-    }
-    });
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-}

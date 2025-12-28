@@ -11,7 +11,7 @@ class frigider: public electrocasnice
             double Pret,
             bool Congelator     
         ):electrocasnice(Marca,Model,An,Pret),congelator{Congelator}{}
-    void afisare(std::ostream& dev)
+    void afisare(std::ostream& dev) const override
     {
         electrocasnice::afisare(dev);
         dev<<congelator<<std::endl;

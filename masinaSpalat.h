@@ -11,7 +11,7 @@ class masinaSpalat: public electrocasnice
             double Pret,
             double Greutate     
         ):electrocasnice(Marca,Model,An,Pret),greutate{Greutate}{}
-    void afisare(std::ostream& dev)
+    void afisare(std::ostream& dev) const override
     {
         electrocasnice::afisare(dev);
         dev<<greutate<<std::endl;

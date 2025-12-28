@@ -1,6 +1,7 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<ctime>
 #pragma once
 
 class electrocasnice
@@ -13,5 +14,22 @@ class electrocasnice
     public:
     electrocasnice(std::string Marca, std::string Model, int An, double Pret):marca{Marca}, model{Model}, an{An}, pret{Pret}{}
     virtual void afisare(std::ostream& dev)const{dev<<marca<<" "<<model<<" "<<an<<" "<<pret;}
-    virtual ~electrocasnice();                                                                    
+    virtual ~electrocasnice()=default;   
+    double getPret(){return pret;}
+    int getVechime(time_t timestamp)
+    {
+        struct tm datetime;
+        time_t now;
+        time_t fabricatie;
+        now = time(NULL);
+        datetime = *localtime(&now);
+        datetime.tm_year = an-1900;
+        datetime.tm_mon = 1-1;
+        datetime.tm_mday = 1;
+        datetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;
+        datetime.tm_isdst = -1;
+        fabricatie = mktime(&datetime);
+        int diff = difftime(fabricatie, timestamp);
+        return diff/31536000;
+    }                                                             
 };

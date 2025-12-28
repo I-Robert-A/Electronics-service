@@ -1,5 +1,4 @@
-#include "lucruElectrocasnice.h"
-#pragma once
+#include "service.h"
 void adaugareMarca(
     const std::string& tip,
     const std::string& marca,

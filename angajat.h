@@ -5,18 +5,24 @@
 class angajat
 {
     protected:
-    static int ID;
+    static int IDnext;
+    int id;
+    std::string post;
     std::string nume, prenume;
     std::string CNP;
     std::string data_A;
     std::string oras_D;
+    bool status =true;
     public:
-    angajat(std::string numele,
+    angajat(std::string Post,
+            std::string numele,
             std::string prenumele,
             std::string cnp,
             std::string dataAngajarii,
             std::string oras)
-        : nume(std::move(numele)),
+        : id(++IDnext),
+          post(std::move(Post)),
+          nume(std::move(numele)),
           prenume(std::move(prenumele)),
           CNP(std::move(cnp)),
           data_A(std::move(dataAngajarii)),
@@ -45,7 +51,7 @@ class angajat
           }
     int getTimp_lucrat() const;
     int Prima_transport() const;
-    int getID(){return ID;}
+    int getID()const{return id;}
     std::string getNume(){return nume;}
     void setNume(std::string Nume){nume=Nume;}
     std::string getPrenume(){return prenume;}
@@ -55,5 +61,7 @@ class angajat
     virtual double calcS() const = 0;
     virtual ~angajat()= default;
     virtual void afisare(std::ostream& dev) const =0;
-    static void setID(int x){ID=ID+x*1;}
+    bool getStatus(){return status;}
+    void setStatus(bool x){status=x;}
+    std::string getPost(){return post;}
 };
