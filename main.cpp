@@ -4,9 +4,10 @@
 #include "service.h"
 #include<fstream>
 #include<sstream>
-#include "frigider.h"
-#include "TV.h"
-#include "masinaSpalat.h"
+#include "cerereR.h"
+#include <queue>
+#include <set>
+
 
 service* service::instance=nullptr;
 
@@ -52,62 +53,26 @@ int main() {
         std::ifstream fin("cereri.csv");
         std::ifstream fin2("angajati.csv");
         std::ofstream fout("cereriInvalide.csv"); 
+        std::ifstream fin3("marci.csv");
         std::string linie;
         service s;
-
-        EmployeeData d;
-        std::map<std::string, std::set<std::string>> Repara;
-        while(std::getline(fin2, linie))
+        struct compare
         {
-            std::stringstream ss(linie);
-            std::string post;
-            std::getline(ss,post,',');
-            std::string nume;
-            std::getline(ss,nume,',');
-            std::string prenume;
-            std::getline(ss,prenume,',');
-            std::string cnp;
-            std::getline(ss,cnp,',');
-            std::string time;
-            std::getline(ss,time,',');
-            std::string oras;
-            std::getline(ss,oras,',');
-            std::string reparatii;
-            std::getline(ss,reparatii,',');
-            std::string Lucrari;
-            std::getline(ss,Lucrari,',');
-            std::string iduri;
-            std::getline(ss,iduri,','); 
-                   
-            std::stringstream ss2(reparatii);
-            std::string tipMarca;
-            std::string marca, tip;
-            while(std::getline(ss2,tipMarca,' '))
+            bool operator()(const cerereR& a, const cerereR& b)const
             {
-                std::stringstream ss3(tipMarca);
-                std::getline(ss3,tip,';');
-                std::getline(ss3,marca,';');
-                Repara[tip].insert(marca);
+                return a.getTime()>b.getTime();
             }
-            std::stringstream ss4(iduri);
-            std::string id;
-            std::vector <int>idI;
-            while(std::getline(ss4,id,';'))
+        };
+        struct less
+        {
+            bool operator()(const cerereR& a, const cerereR& b)const
             {
-                idI.push_back(std::stoi(id));
+                return a.getTime()<b.getTime();
             }
-            int lucrariI;
-            if(!(Lucrari.empty()))
-                lucrariI=std::stoi(Lucrari);
-            d.Post=post;
-            d.Nume=nume;
-            d.Prenume=prenume;
-            d.CNP=cnp;
-            d.data_A=time;
-            d.IDuri=idI;
-            d.lucrari=lucrariI;
-            d.oras_D=oras;
-            d.repara=Repara;
+        };
+        std::set<cerereR,less> cereriAsteptare;
+        EmployeeData d;
+        
             //std::cout<<d.Nume<<" "<<d.Prenume<<" "<<d.CNP<<" "<<d.data_A<<" "<<d.lucrari<<" "<<d.oras_D<<" ";
             for(auto i:d.IDuri)
             {
@@ -121,63 +86,33 @@ int main() {
                     //std::cout<<y<<" ";
                 }
                 //std::cout<<std::endl;
-            }
-            if(post=="tehnician")
-            {
-                s.angajareTehnician(d);
-            }
-            else if(post=="receptioner")
-            {
-                s.angajareReceptioner(d);
-            }
-            else
-            {
-                s.angajareSupervizor(d);
-            }
-        }    
+            }    
+        citireAngajat(fin2,s);
         s.concediere(2);
-        s.afisareAngajati();
+        //s.afisareAngajati();
         auto tehnicieni=s.getPtrteh();
         std::sort(tehnicieni.begin(), tehnicieni.end(),[](tehnician* a, tehnician*b)
         {
             return a->getLucrare()<b->getLucrare();
         });
         for (auto& x : tehnicieni)
-            x->afisare(std::cout);
-        /*while(std::getline(fin, linie))
-        {
-            std::stringstream ss(linie);
-            std::string id;
-            std::getline(ss,id,',');
-            std::string marca;
-            std::getline(ss,marca,',');
-            std::string model;
-            std::getline(ss,model,',');
-            std::string an;
-            std::getline(ss,an,',');
-            std::string pret;
-            std::getline(ss,pret,',');
-            std::string time;
-            std::getline(ss,time,',');
-            std::string complexitate;
-            std::getline(ss,complexitate,',');
-            int anul=std::stoi(an);
-            double pretul=std::stod(pret);   
-            std::unique_ptr<electrocasnice> e=std::make_unique<electrocasnice>(marca,model,anul,pretul); 
-            std::cout<<complexitate;       
-            const char* formatPattern = "%d/%m/%Y %H:%M:%S";  
+            //x->afisare(std::cout);
+   std::string linie;
+   s.citireMarci(fin3);
+while (std::getline(fin, linie)) {
+    cerereR cr;
+    citire(cr, linie);
+    PQ cereri;
+    s.verificareCerere(fout,cr,cereri);
+    auto temp(std::move(cereri));
+    while (!temp.empty())
+    {
+        temp.top().afisare(std::cout);
+        temp.pop();
+    }
+    //cr.afisare(std::cout);
+}
 
-            // Holds date-time components
-            tm timeParts = {};
-            timeParts.tm_isdst = -1;
-            // Parse string
-            strptime(time.c_str(), formatPattern, &timeParts);  
-
-            // Convert to timestamp for easy use
-            time_t timestamp = mktime(&timeParts);
-            std::cout<<id<<" "<<marca<<" "<<model<<" "<<an<<" "<<pret<<" "<<ctime(&timestamp)<<" "<<complexitate<<std::endl;  
-            
-        }*/
     return 0;
 }
 

@@ -1,6 +1,7 @@
 #include "lucruAngajati.h"
 #include "lucruElectrocasnice.h"
 #include <queue>
+#include "cerereR.h"
 #pragma once
 class service{
     private:
@@ -18,7 +19,16 @@ class service{
     static service *instance;
 
     public:
-    service()=default;
+    service()
+{
+    posReparatii.emplace("TV",
+        std::unordered_map<std::string, std::vector<std::string>>{});
+    posReparatii.emplace("frigider",
+        std::unordered_map<std::string, std::vector<std::string>>{});
+    posReparatii.emplace("masina de spalat",
+        std::unordered_map<std::string, std::vector<std::string>>{});
+}
+
     static service* getInstance(){
         if(!instance)
             instance=new service();
@@ -51,6 +61,12 @@ void adaugareModel(
     const std::string& marca,
     std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::string>>>& posReparatii
 ) ;
+void stergereModel(
+    const std::string& tip,
+    const std::string& marca,
+    const std::string& model,
+    std::unordered_map<std::string, std::unordered_map<std::string, std::vector<std::string>>>& posReparatii
+);
 void angajareTehnician(const EmployeeData& d);
 void angajareReceptioner(const EmployeeData& d);
 void angajareSupervizor(const EmployeeData& d);
@@ -63,4 +79,7 @@ void modificaNume(std::unique_ptr<angajat>& a,std::string NumeNou);
 void afisareAngajati()const;
 
 auto getPtrteh(){return PtrTehnician;}
+void verificareCerere(std::ostream& dev,cerereR& cr,PQ&);
+void citireMarci(std::istream& dev);
 };
+void citireAngajat(std::istream& dev,service& s);

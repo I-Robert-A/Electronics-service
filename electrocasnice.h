@@ -7,15 +7,21 @@
 class electrocasnice
 {
     protected:
+    std::string tip;
     std::string marca;
     std::string model;
     int an;
     double pret;
+
     public:
-    electrocasnice(std::string Marca, std::string Model, int An, double Pret):marca{Marca}, model{Model}, an{An}, pret{Pret}{}
-    virtual void afisare(std::ostream& dev)const{dev<<marca<<" "<<model<<" "<<an<<" "<<pret;}
+   
+    electrocasnice(std::string Tip,std::string Marca, std::string Model, int An, double Pret):tip{Tip},marca{Marca}, model{Model}, an{An}, pret{Pret}{}
+    virtual void afisare(std::ostream& dev)const{dev<<tip<<" "<<marca<<" "<<model<<" "<<an<<" "<<pret<<" ";}
     virtual ~electrocasnice()=default;   
     double getPret(){return pret;}
+    std::string getMarca(){return marca;}
+    std::string getTip(){return tip;}
+
     int getVechime(time_t timestamp)
     {
         struct tm datetime;
@@ -29,7 +35,7 @@ class electrocasnice
         datetime.tm_hour = 0; datetime.tm_min = 0; datetime.tm_sec = 0;
         datetime.tm_isdst = -1;
         fabricatie = mktime(&datetime);
-        int diff = difftime(fabricatie, timestamp);
+        int diff = difftime(timestamp, fabricatie);
         return diff/31536000;
-    }                                                             
+    }                                                            
 };
