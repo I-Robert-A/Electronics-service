@@ -9,18 +9,18 @@
 class cerereR
 {
     int id;
-    std::unique_ptr<electrocasnice> e;
+    std::shared_ptr<electrocasnice> e;
     time_t timestamp;
     int complexitate;
     int durata;
     double pret;
     public:
     cerereR()=default;
-    cerereR(std::unique_ptr<electrocasnice> E, 
+    cerereR(std::shared_ptr<electrocasnice> E, 
             time_t Timestamp,
             int Complexitate, int Id
         ):id(Id),
-        e{std::move(E)},
+        e{E},
         timestamp{Timestamp},
         complexitate{Complexitate}
         {
@@ -28,7 +28,7 @@ class cerereR
             {
                 throw std::invalid_argument("complexitate neconforma");
             }
-            if(complexitate==0)
+            else if(complexitate==0)
             {
                 durata=0;
                 pret=0;
@@ -39,16 +39,25 @@ class cerereR
                 pret=durata*e->getPret();
             }
         }
+    cerereR(const cerereR& cr):id{cr.id},e{cr.e},timestamp{cr.timestamp},
+                               complexitate{cr.complexitate},durata{cr.durata},pret{cr.pret}{}
+
         void afisare(std::ostream& dev)const;
         time_t getTime()const{return timestamp;}
-        std::string getMarca()const{return e->getMarca();}
+        std::string getMarca() const {
+        if (!e) throw std::runtime_error("cerereR: electrocasnice null");
+        return e->getMarca();
+        }
         std::string getTip()const{return e->getTip();}
+        double getPret()const{return e->getPret();}
+        int getDurata()const{return durata;}
+        int getID()const{return id;}
 };
 
-void citire(cerereR&, std::string );
+void citire(cerereR&, std::string ,std::ostream& );
 struct compare {
     bool operator()(const cerereR& a, const cerereR& b) const {
-        return a.getTime() > b.getTime();
+        return a.getTime() < b.getTime();
     }
 };
 

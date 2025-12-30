@@ -12,7 +12,7 @@ class angajat
     std::string CNP;
     std::string data_A;
     std::string oras_D;
-    bool status =true;
+    int status =0;
     public:
     angajat(std::string Post,
             std::string numele,
@@ -46,6 +46,7 @@ class angajat
 
             if(CNP[12]-'0'!=suma)
             {
+                std::cout<<id;
                 throw std::invalid_argument("CNP invalid");
             }
           }
@@ -61,7 +62,7 @@ class angajat
     virtual double calcS() const = 0;
     virtual ~angajat()= default;
     virtual void afisare(std::ostream& dev) const =0;
-    bool getStatus(){return status;}
-    void setStatus(bool x){status=x;}
+    int getStatus(){return status;}
+    void setStatus(int x){status=status+(1*x);}
     std::string getPost(){return post;}
 };

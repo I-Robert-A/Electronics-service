@@ -79,6 +79,7 @@ void modificaNume(std::unique_ptr<angajat>& a,std::string NumeNou);
 void afisareAngajati()const;
 
 auto getPtrteh(){return PtrTehnician;}
+auto getPtrrec(){return PtrReceptioner;}
 void verificareCerere(std::ostream& dev,cerereR& cr,PQ&);
 void citireMarci(std::istream& dev);
 };

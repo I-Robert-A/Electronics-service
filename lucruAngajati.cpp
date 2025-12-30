@@ -139,12 +139,11 @@ void citireAngajat(std::istream& dev,service& s)
             std::string reparatii;
             std::getline(ss,reparatii,',');
             std::string extra;
-            std::getline(ss,extra,',');
-                   
+            std::getline(ss,extra,',');       
             std::stringstream ss2(reparatii);
             std::string tipMarca;
             std::string marca, tip;
-            while(std::getline(ss2,tipMarca,' '))
+            while(std::getline(ss2,tipMarca,'|'))
             {
                 std::stringstream ss3(tipMarca);
                 std::getline(ss3,tip,';');

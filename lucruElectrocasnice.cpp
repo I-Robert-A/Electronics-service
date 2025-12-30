@@ -37,6 +37,7 @@ void service::adaugareModel(
         auto& modele = marci[marca]; 
 
     if (std::find(modele.begin(), modele.end(), model) != modele.end()) {
+        std::cout<<model<<" ";
         throw std::invalid_argument("model deja existent");
     }
 
@@ -99,19 +100,23 @@ auto itTip = posReparatii.find(tip);
 
 void service::verificareCerere(std::ostream& dev,cerereR& cr, PQ& cereri)
 {
-    std::string marca=cr.getMarca();
-    std::string tip=cr.getTip();
-    int ok=1;
+    try
+    {   
+        std::string marca=cr.getMarca();
+        std::string tip=cr.getTip();
+    int ok=0;
     auto itTip = posReparatii.find(tip);
     if(itTip!=posReparatii.end())
     {
         auto itMarca=itTip->second.find(marca);
+        //std::cout<<itMarca->first;
         if(itMarca!=itTip->second.end())
         {
-            ok=0;
+            ok=1;
         }
     }
-    if(ok==1)
+    
+    if(ok==0)
     {
         cr.afisare(dev);
     }
@@ -119,6 +124,15 @@ void service::verificareCerere(std::ostream& dev,cerereR& cr, PQ& cereri)
     {
         cereri.push(std::move(cr));
     }
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<<cr.getID();
+        //cr.afisare(dev);
+        std::cerr << e.what() << '\n';
+    }
+    
+    
 }
 void service::citireMarci(std::istream& dev)
 {
@@ -134,9 +148,18 @@ void service::citireMarci(std::istream& dev)
         std::getline(ss,modele,',');
         std::stringstream ss2(modele);
         std::string model;
+        //std::cout<<model<<" ";
         while(std::getline(ss2,model,';'))
         {
-            adaugareModel(tip,marca,model,posReparatii);
+            try
+            {
+                adaugareModel(tip,marca,model,posReparatii);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
         } 
     }
 }

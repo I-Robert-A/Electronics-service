@@ -3,6 +3,7 @@
 #include <ctime>
 #include <map>
 #include<set>
+#include<array>
 #pragma once
 
 
@@ -12,7 +13,8 @@ private:
     std::map<std::string, std::set<std::string>> repara;
     double pretR = 0.0;
     int lucrari=0;
-
+    std::array<int,2> IDC={0,0};
+    std::array<int,2> durataC={0,0}; 
 public:
     tehnician(std::string Post,
               std::string Nume, std::string Prenume,
@@ -49,6 +51,11 @@ public:
     }
     void addLucrare(){lucrari++;}
     int getLucrare()const{return lucrari;}
+    const std::map<std::string, std::set<std::string>>& getRepara()const{return repara;}
+    int getIDC(int i){return IDC[i];}
+    int getdurataC(int i){return durataC[i];}
+    void setIDC(int idc, int i){IDC[i]=idc;}
+    void setdurataC(int duratac, int i){durataC[i]=duratac;}
 };
 
 class supervizor : public angajat
@@ -102,4 +109,5 @@ receptioner(std::string Post,std::string Nume, std::string Prenume,
         dev<<std::endl;
         dev<<"salariu: "<<calcS()<<std::endl;
     }
+    void addID(int IDA){IDuri.push_back(IDA);}
 };

@@ -1,6 +1,11 @@
-tehnician,Popa,Lara-Maria,5050603170065,12/01/2014,Suceava,televizor;Playstation masinaSpalat;spiny televizor;arctic,7
-tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,televizor;LG frigider;bravac televizor;samsung,5
+tehnician,Popa,Lara-Maria,5050603170065,12/01/2014,Suceava,televizor;arctic,7
+tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,5
 receptioner,Bratu,Alin,1860922025806,24/05/2022,Bucuresti,1;2
 supervizor,Bratu,Alin,1860922025806,24/05/2022,Bucuresti
-tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,televizor;LG frigider;bravac televizor;ciorba,6
-
+tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,masina de spalat;samnus,6
+tehnician,Ionescu,Andrei,1960101123456,10/06/2020,Bucuresti,TV;LG|TV;Samsung,6
+tehnician,Marin,Elena,2950205123457,22/03/2019,Cluj,TV;Sony|TV;Samsung,7
+tehnician,Dumitru,Razvan,1980718123458,05/11/2021,Iasi,frigider;LG|frigider;Samsung,6
+tehnician,Stan,Ioana,6020911123459,14/09/2018,Timisoara,frigider;Beko|frigider;Samsung,5
+tehnician,Georgescu,Mihai,1930401123460,01/02/2022,Brasov,masina de spalat;LG|masina de spalat;Bosch,6
+tehnician,Petrescu,Ana,2901223123461,17/07/2020,Constanta,masina de spalat;Samsung|masina de spalat;samnus,7

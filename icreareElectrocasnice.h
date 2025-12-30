@@ -16,34 +16,34 @@ struct ElectronicData
 class icreareElectrocasnice
 {
     public:
-    virtual std::unique_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData)=0;
+    virtual std::shared_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData)=0;
     virtual ~icreareElectrocasnice()=default;
 };
 
 class Electrocasnic_frigider:public icreareElectrocasnice
 {
     public:
-    std::unique_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
+    std::shared_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
     {
-        return std::make_unique<frigider>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.congelator);
+        return std::make_shared<frigider>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.congelator);
     }
 
 };
 class Electrocasnic_TV:public icreareElectrocasnice
 {
     public:
-    std::unique_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
+    std::shared_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
     {
-        return std::make_unique<TV>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.Diagonala);
+        return std::make_shared<TV>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.Diagonala);
     }
 
 };
 class Electrocasnic_MasSpalat:public icreareElectrocasnice
 {
     public:
-    std::unique_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
+    std::shared_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
     {
-        return std::make_unique<masinaSpalat>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.greutate);
+        return std::make_shared<masinaSpalat>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.greutate);
     }
 
 };

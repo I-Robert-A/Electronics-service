@@ -1,6 +1,6 @@
 #include "cerereR.h"
 
-void citire(cerereR& cr,std::string linie)
+void citire(cerereR& cr,std::string linie,std::ostream& dev)
 {
             std::stringstream ss(linie);
             std::string id;
@@ -49,20 +49,25 @@ void citire(cerereR& cr,std::string linie)
                 auto doc = ms->creeazaElectrocasnic(ed);
                 cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
             }
-            if(tip=="TV")
+            else if(tip=="TV")
             {
                 std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_TV>();
                 ed.Diagonala=std::stod(extra);
                 auto doc = ms->creeazaElectrocasnic(ed);
                 cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
             }
-            if(tip=="masina de spalat")
+            else if(tip=="masina de spalat")
             {
                 std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_MasSpalat>();
                 ed.greutate=std::stod(extra);
                 auto doc = ms->creeazaElectrocasnic(ed);
                 cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
             }
+            else
+            {
+                dev<<linie<<std::endl;
+            }
+            
         }
 
 void cerereR::afisare(std::ostream& dev)const
