@@ -1,6 +1,7 @@
 #include "cerereR.h"
-
-void citire(cerereR& cr,std::string linie,std::ostream& dev)
+#include "service.h"
+#include<iomanip>
+void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
 {
             std::stringstream ss(linie);
             std::string id;
@@ -65,7 +66,8 @@ void citire(cerereR& cr,std::string linie,std::ostream& dev)
             }
             else
             {
-                dev<<linie<<std::endl;
+                if(optiune==true)
+                    dev<<linie<<std::endl;
             }
             
         }
@@ -81,5 +83,102 @@ void cerereR::afisare(std::ostream& dev)const
 
     e->afisare(dev);
 
-    dev << ctime(&timestamp) << " " << complexitate << "\n";
+    
+    std::string t = ctime(&timestamp);
+    std::tm tm = *std::localtime(&timestamp);
+    dev << std::put_time(&tm, "%d/%m/%Y %H:%M:%S")
+        << "," << complexitate;
 } 
+
+void cerereR::afisareCSV(std::ostream& dev)const
+{
+    dev << id << ",";
+
+    if (!e) {
+        dev << "[electrocasnic null]\n";
+        return; // sau throw
+    }
+
+    e->afisareCSV(dev);
+
+    
+    std::string t = ctime(&timestamp);
+    std::tm tm = *std::localtime(&timestamp);
+    dev << std::put_time(&tm, "%d/%m/%Y %H:%M:%S")
+        << "," << complexitate;
+}
+
+void service::verificareCerere(std::ostream& dev,cerereR& cr, PQ& cereri)
+{
+    try
+    {   
+        std::string marca=cr.getMarca();
+        std::string tip=cr.getTip();
+    int ok=0;
+    auto itTip = posReparatii.find(tip);
+    if(itTip!=posReparatii.end())
+    {
+        auto itMarca=itTip->second.find(marca);
+        //std::cout<<itMarca->first;
+        if(itMarca!=itTip->second.end())
+        {
+            ok=1;
+        }
+    }
+    
+    if(ok==0)
+    {
+        cr.afisareCSV(dev);
+        dev<<std::endl;
+    }
+    else
+    {
+        cereri.push(std::move(cr));
+    }
+    }
+    catch(const std::exception& e)
+    {
+        std::cout<<cr.getID();
+        //cr.afisare(dev);
+        std::cerr << e.what() << '\n';
+    }
+    
+    
+}
+
+void afiseazaInvalide(std::istream& dev,std::ostream& devO)
+{
+    struct MMA
+    {
+        std::string marca;
+        std::string model;
+        int aparitii=1;
+    }; 
+    cerereR cr;
+    std::string linie;
+    std::vector<MMA> marciModele;
+    while(std::getline(dev,linie))
+    {        
+        MMA mma;
+        citire(cr,linie,devO,false);
+        mma.marca=cr.getMarca();
+        mma.model=cr.getModel();
+    
+    auto it=std::find_if(marciModele.begin(),marciModele.end(),[&](const MMA& x)
+{
+    return (x.marca==mma.marca && x.model==mma.model);
+});
+    if(it!=marciModele.end())
+    {
+        (*it).aparitii++;
+    }
+    else
+    {
+        marciModele.push_back(mma);
+    }
+}
+    std::sort(marciModele.begin(),marciModele.end(),[](const MMA& a, const MMA& b)
+{
+    return a.aparitii>b.aparitii;
+});
+}

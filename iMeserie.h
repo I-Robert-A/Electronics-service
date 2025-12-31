@@ -13,8 +13,8 @@ private:
     std::map<std::string, std::set<std::string>> repara;
     double pretR = 0.0;
     int lucrari=0;
-    std::array<int,2> IDC={0,0};
-    std::array<int,2> durataC={0,0}; 
+    std::array<int,3> IDC={0,0,0};
+    std::array<int,3> durataC={0,0,0}; 
 public:
     tehnician(std::string Post,
               std::string Nume, std::string Prenume,
@@ -97,7 +97,7 @@ receptioner(std::string Post,std::string Nume, std::string Prenume,
     }
     void afisare(std::ostream& dev)const override
     {
-        dev<<getID()<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
+        dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
         dev<<"iduri: ";
         auto it1 = IDuri.begin();
 

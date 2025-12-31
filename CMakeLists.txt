@@ -9,10 +9,16 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 qt_standard_project_setup()
 
 qt_add_executable(Qt6Hello
-    main2.cpp
+  main2.cpp
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui
+  cerereR.cpp
+  lucruAngajati.cpp
+  lucruElectrocasnice.cpp
+  angajat.cpp
+  prelucrareCereri.cpp
+  raporturi.cpp
 )
 
 target_link_libraries(Qt6Hello PRIVATE Qt6::Widgets)

@@ -1,9 +1,5 @@
 /home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/EWIEGA46WW/moc_mainwindow.cpp: /home/robert/ProiectPOO/Electronics-service/mainwindow.h \
   /home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/moc_predefs.h \
-  /home/robert/ProiectPOO/Electronics-service/angajat.h \
-  /home/robert/ProiectPOO/Electronics-service/iAngajat.h \
-  /home/robert/ProiectPOO/Electronics-service/iMeserie.h \
-  /home/robert/ProiectPOO/Electronics-service/lucruAngajati.h \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -43,7 +39,6 @@
   /usr/include/c++/13/bits/hash_bytes.h \
   /usr/include/c++/13/bits/invoke.h \
   /usr/include/c++/13/bits/ios_base.h \
-  /usr/include/c++/13/bits/istream.tcc \
   /usr/include/c++/13/bits/iterator_concepts.h \
   /usr/include/c++/13/bits/list.tcc \
   /usr/include/c++/13/bits/locale_classes.h \
@@ -94,12 +89,10 @@
   /usr/include/c++/13/bits/stl_list.h \
   /usr/include/c++/13/bits/stl_map.h \
   /usr/include/c++/13/bits/stl_multimap.h \
-  /usr/include/c++/13/bits/stl_multiset.h \
   /usr/include/c++/13/bits/stl_numeric.h \
   /usr/include/c++/13/bits/stl_pair.h \
   /usr/include/c++/13/bits/stl_raw_storage_iter.h \
   /usr/include/c++/13/bits/stl_relops.h \
-  /usr/include/c++/13/bits/stl_set.h \
   /usr/include/c++/13/bits/stl_tempbuf.h \
   /usr/include/c++/13/bits/stl_tree.h \
   /usr/include/c++/13/bits/stl_uninitialized.h \
@@ -127,7 +120,6 @@
   /usr/include/c++/13/cstdint \
   /usr/include/c++/13/cstdlib \
   /usr/include/c++/13/cstring \
-  /usr/include/c++/13/ctime \
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
@@ -144,8 +136,6 @@
   /usr/include/c++/13/initializer_list \
   /usr/include/c++/13/ios \
   /usr/include/c++/13/iosfwd \
-  /usr/include/c++/13/iostream \
-  /usr/include/c++/13/istream \
   /usr/include/c++/13/iterator \
   /usr/include/c++/13/limits \
   /usr/include/c++/13/list \
@@ -160,7 +150,6 @@
   /usr/include/c++/13/pstl/glue_algorithm_defs.h \
   /usr/include/c++/13/pstl/glue_memory_defs.h \
   /usr/include/c++/13/pstl/glue_numeric_defs.h \
-  /usr/include/c++/13/set \
   /usr/include/c++/13/stdexcept \
   /usr/include/c++/13/streambuf \
   /usr/include/c++/13/string \
@@ -294,7 +283,6 @@
   /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/QString \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qanystringview.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydata.h \
@@ -326,7 +314,6 @@
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qglobalstatic.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qhash.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qhashfunctions.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevice.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiodevicebase.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiterable.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qiterator.h \
@@ -375,7 +362,6 @@
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtextstream.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \
   /usr/include/x86_64-linux-gnu/qt6/QtCore/qvarlengtharray.h \
@@ -393,33 +379,19 @@
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qkeysequence.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qpaintdevice.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qpalette.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtGui/qpen.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtGui/qpicture.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qpixelformat.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qpixmap.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qpolygon.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qregion.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qrgb.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qrgba64.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtGui/qtextcursor.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtGui/qtextdocument.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtGui/qtextformat.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtGui/qtextoption.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtgui-config.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiexports.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiglobal.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qtransform.h \
   /usr/include/x86_64-linux-gnu/qt6/QtGui/qwindowdefs.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLabel \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QLineEdit \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/QPushButton \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractbutton.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qframe.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlabel.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qlineedit.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmainwindow.h \
-  /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qpushbutton.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtabwidget.h \
   /usr/include/x86_64-linux-gnu/qt6/QtWidgets/qtwidgets-config.h \

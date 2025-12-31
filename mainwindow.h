@@ -1,42 +1,43 @@
 #pragma once
+#include <QMainWindow>
 
-#include <QMainWindow>   // <- obligatoriu
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
-
-#include <memory>
-#include <vector>
-#include <string>
-#include <unordered_map>
-
-// dacă EmployeeData / angajat sunt definite în aceste fișiere:
-#include "lucruAngajati.h"   // unde e EmployeeData + angajat
-// sau include exact headerul care le definește
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QPlainTextEdit;
+class QTimer;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    explicit MainWindow(QWidget* parent=nullptr);
+    ~MainWindow() override;
 
 private:
-    Ui::MainWindow *ui;
+    QLabel* lblInfo=nullptr;
+    QLineEdit* editInput=nullptr;
+    QPushButton* btnConfirm=nullptr;
+    QPlainTextEdit* outBox=nullptr;
+    QTimer* liveTimer=nullptr;
 
-    // UI
-    QLabel* lblInfo = nullptr;
-    QLineEdit* editInput = nullptr;
-    QPushButton* btnConfirm = nullptr;
-    QString tipAngajat;
+    enum class Mode {
+        None,
+        AngajareTehnician, AngajareReceptioner, AngajareSupervizor,
+        Concediere, ModificaNume,
+        AdaugaMarca, StergeMarca, AdaugaModel, StergeModel,
+        AfiseazaInvalide,
+        LiveToggle,
+        RaportTop3, RaportLunga, RaportAsteptare,
+        ElectrocasniceReparate
+    };
 
-    // datele tale (persistente în fereastră)
-    EmployeeData d;
-    std::vector<std::unique_ptr<angajat>> angajati;
-    std::unordered_map<std::string,
-        std::unordered_map<std::string, std::vector<std::string>>> posReparatii;
+    Mode mode = Mode::None;
+
+    // forward către implementarea internă din cpp
+    struct Impl;
+    Impl* impl = nullptr;
+
+    // helper UI (definite în cpp)
+    void setMode(Mode m, const QString& info, const QString& placeholder);
+    void showOut(const QString& title, const QString& text);
 };

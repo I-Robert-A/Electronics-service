@@ -14,6 +14,7 @@ class angajat
     std::string oras_D;
     int status =0;
     public:
+    angajat()=default;
     angajat(std::string Post,
             std::string numele,
             std::string prenumele,
@@ -53,12 +54,12 @@ class angajat
     int getTimp_lucrat() const;
     int Prima_transport() const;
     int getID()const{return id;}
-    std::string getNume(){return nume;}
+    std::string getNume()const{return nume;}
     void setNume(std::string Nume){nume=Nume;}
-    std::string getPrenume(){return prenume;}
-    std::string getCNP(){return CNP;}
-    std::string getdata_A(){return data_A;}
-    std::string getOras_D(){return oras_D;}
+    std::string getPrenume()const{return prenume;}
+    std::string getCNP()const{return CNP;}
+    std::string getdata_A()const{return data_A;}
+    std::string getOras_D()const{return oras_D;}
     virtual double calcS() const = 0;
     virtual ~angajat()= default;
     virtual void afisare(std::ostream& dev) const =0;

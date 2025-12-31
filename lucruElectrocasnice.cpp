@@ -98,42 +98,7 @@ auto itTip = posReparatii.find(tip);
     }
 }
 
-void service::verificareCerere(std::ostream& dev,cerereR& cr, PQ& cereri)
-{
-    try
-    {   
-        std::string marca=cr.getMarca();
-        std::string tip=cr.getTip();
-    int ok=0;
-    auto itTip = posReparatii.find(tip);
-    if(itTip!=posReparatii.end())
-    {
-        auto itMarca=itTip->second.find(marca);
-        //std::cout<<itMarca->first;
-        if(itMarca!=itTip->second.end())
-        {
-            ok=1;
-        }
-    }
-    
-    if(ok==0)
-    {
-        cr.afisare(dev);
-    }
-    else
-    {
-        cereri.push(std::move(cr));
-    }
-    }
-    catch(const std::exception& e)
-    {
-        std::cout<<cr.getID();
-        //cr.afisare(dev);
-        std::cerr << e.what() << '\n';
-    }
-    
-    
-}
+
 void service::citireMarci(std::istream& dev)
 {
     std::string linie;

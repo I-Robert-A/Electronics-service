@@ -111,8 +111,7 @@ void service::afisareAngajati()const
 {
     for(auto& i: angajati)
     {
-        if((*i).getStatus())
-            (*i).afisare(std::cout);
+        (*i).afisare(std::cout);
     }
 }
 

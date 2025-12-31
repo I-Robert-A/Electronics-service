@@ -15,7 +15,7 @@ class TV: public electrocasnice
     void afisare(std::ostream& dev) const override
     {
         electrocasnice::afisare(dev);
-        dev<<diagonala<<std::endl;
+        dev<<diagonala;
     }
     };
 
@@ -34,7 +34,7 @@ class TV: public electrocasnice
     void afisare(std::ostream& dev) const override
     {
         electrocasnice::afisare(dev);
-        dev<<greutate<<std::endl;
+        dev<<greutate;
     }
     };
 
@@ -53,6 +53,6 @@ class TV: public electrocasnice
     void afisare(std::ostream& dev) const override
     {
         electrocasnice::afisare(dev);
-        dev<<congelator<<std::endl;
+        dev<<congelator;
     }
     };

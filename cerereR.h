@@ -43,23 +43,24 @@ class cerereR
                                complexitate{cr.complexitate},durata{cr.durata},pret{cr.pret}{}
 
         void afisare(std::ostream& dev)const;
+        void afisareCSV(std::ostream& dev)const;
         time_t getTime()const{return timestamp;}
         std::string getMarca() const {
         if (!e) throw std::runtime_error("cerereR: electrocasnice null");
         return e->getMarca();
         }
         std::string getTip()const{return e->getTip();}
-        double getPret()const{return e->getPret();}
+        double getPret()const{return pret;}
         int getDurata()const{return durata;}
         int getID()const{return id;}
+        std::string getModel()const{return e->getModel();}
 };
 
-void citire(cerereR&, std::string ,std::ostream& );
+void citire(cerereR&, std::string ,std::ostream& ,bool);
 struct compare {
     bool operator()(const cerereR& a, const cerereR& b) const {
-        return a.getTime() < b.getTime();
+        return a.getTime() > b.getTime();
     }
 };
 
 using PQ = std::priority_queue<cerereR, std::vector<cerereR>, compare>;
-

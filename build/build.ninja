@@ -68,6 +68,54 @@ build CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o: CXX_COMPILER__Qt6Hello_unscanned
   OBJECT_DIR = CMakeFiles/Qt6Hello.dir
   OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
 
+build CMakeFiles/Qt6Hello.dir/cerereR.cpp.o: CXX_COMPILER__Qt6Hello_unscanned_ /home/robert/ProiectPOO/Electronics-service/cerereR.cpp || cmake_object_order_depends_target_Qt6Hello
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Qt6Hello.dir/cerereR.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/Qt6Hello.dir
+  OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
+
+build CMakeFiles/Qt6Hello.dir/lucruAngajati.cpp.o: CXX_COMPILER__Qt6Hello_unscanned_ /home/robert/ProiectPOO/Electronics-service/lucruAngajati.cpp || cmake_object_order_depends_target_Qt6Hello
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Qt6Hello.dir/lucruAngajati.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/Qt6Hello.dir
+  OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
+
+build CMakeFiles/Qt6Hello.dir/lucruElectrocasnice.cpp.o: CXX_COMPILER__Qt6Hello_unscanned_ /home/robert/ProiectPOO/Electronics-service/lucruElectrocasnice.cpp || cmake_object_order_depends_target_Qt6Hello
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Qt6Hello.dir/lucruElectrocasnice.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/Qt6Hello.dir
+  OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
+
+build CMakeFiles/Qt6Hello.dir/angajat.cpp.o: CXX_COMPILER__Qt6Hello_unscanned_ /home/robert/ProiectPOO/Electronics-service/angajat.cpp || cmake_object_order_depends_target_Qt6Hello
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Qt6Hello.dir/angajat.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/Qt6Hello.dir
+  OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
+
+build CMakeFiles/Qt6Hello.dir/prelucrareCereri.cpp.o: CXX_COMPILER__Qt6Hello_unscanned_ /home/robert/ProiectPOO/Electronics-service/prelucrareCereri.cpp || cmake_object_order_depends_target_Qt6Hello
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Qt6Hello.dir/prelucrareCereri.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/Qt6Hello.dir
+  OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
+
+build CMakeFiles/Qt6Hello.dir/raporturi.cpp.o: CXX_COMPILER__Qt6Hello_unscanned_ /home/robert/ProiectPOO/Electronics-service/raporturi.cpp || cmake_object_order_depends_target_Qt6Hello
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Qt6Hello.dir/raporturi.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui
+  OBJECT_DIR = CMakeFiles/Qt6Hello.dir
+  OBJECT_FILE_DIR = CMakeFiles/Qt6Hello.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Qt6Hello
@@ -76,7 +124,7 @@ build CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o: CXX_COMPILER__Qt6Hello_unscanned
 #############################################
 # Link the executable Qt6Hello
 
-build Qt6Hello: CXX_EXECUTABLE_LINKER__Qt6Hello_ CMakeFiles/Qt6Hello.dir/Qt6Hello_autogen/mocs_compilation.cpp.o CMakeFiles/Qt6Hello.dir/main2.cpp.o CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o | /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || Qt6Hello_autogen Qt6Hello_autogen_timestamp_deps
+build Qt6Hello: CXX_EXECUTABLE_LINKER__Qt6Hello_ CMakeFiles/Qt6Hello.dir/Qt6Hello_autogen/mocs_compilation.cpp.o CMakeFiles/Qt6Hello.dir/main2.cpp.o CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o CMakeFiles/Qt6Hello.dir/cerereR.cpp.o CMakeFiles/Qt6Hello.dir/lucruAngajati.cpp.o CMakeFiles/Qt6Hello.dir/lucruElectrocasnice.cpp.o CMakeFiles/Qt6Hello.dir/angajat.cpp.o CMakeFiles/Qt6Hello.dir/prelucrareCereri.cpp.o CMakeFiles/Qt6Hello.dir/raporturi.cpp.o | /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || Qt6Hello_autogen Qt6Hello_autogen_timestamp_deps
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2  /usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2  /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so
   OBJECT_DIR = CMakeFiles/Qt6Hello.dir
   POST_BUILD = :
@@ -133,7 +181,7 @@ build Qt6Hello_autogen/timestamp Qt6Hello_autogen/mocs_compilation.cpp | ${cmake
 #############################################
 # Phony custom command for CMakeFiles/Qt6Hello_autogen_timestamp_deps
 
-build CMakeFiles/Qt6Hello_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Qt6Hello_autogen_timestamp_deps: phony /usr/lib/qt6/libexec/moc /usr/lib/qt6/libexec/uic /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2
+build CMakeFiles/Qt6Hello_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Qt6Hello_autogen_timestamp_deps: phony /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 /usr/lib/qt6/libexec/uic /usr/lib/qt6/libexec/moc
 
 
 #############################################

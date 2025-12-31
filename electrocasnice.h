@@ -14,13 +14,15 @@ class electrocasnice
     double pret;
 
     public:
-   electrocasnice()=default;
+    electrocasnice()=default;
     electrocasnice(std::string Tip,std::string Marca, std::string Model, int An, double Pret):tip{Tip},marca{Marca}, model{Model}, an{An}, pret{Pret}{}
     virtual void afisare(std::ostream& dev)const{dev<<tip<<" "<<marca<<" "<<model<<" "<<an<<" "<<pret<<" ";}
+    virtual void afisareCSV(std::ostream& dev)const{dev<<tip<<","<<marca<<","<<model<<","<<an<<","<<pret<<",";}
     virtual ~electrocasnice()=default;   
-    double getPret(){return pret;}
-    std::string getMarca(){return marca;}
-    std::string getTip(){return tip;}
+    double getPret()const{return pret;}
+    std::string getMarca()const{return marca;}
+    std::string getTip()const{return tip;}
+    std::string getModel()const{return model;}
 
     int getVechime(time_t timestamp)
     {
