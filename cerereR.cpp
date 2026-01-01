@@ -4,6 +4,10 @@
 void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
 {
             std::stringstream ss(linie);
+            if (linie.empty()) {
+            if (optiune) dev << linie << "\n";
+            throw std::invalid_argument("linie goala");
+            }
             std::string id;
             std::getline(ss,id,',');
             std::string tip;
@@ -67,7 +71,17 @@ void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
             else
             {
                 if(optiune==true)
+                { 
                     dev<<linie<<std::endl;
+                    throw std::invalid_argument("tip electrocasnic nesuportat: " + tip);
+                }
+                else
+                {
+                    std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_necunoscut>();
+                    ed.ceva=std::stod(extra);
+                    auto doc = ms->creeazaElectrocasnic(ed);
+                    cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
+                }
             }
             
         }
@@ -154,15 +168,30 @@ void afiseazaInvalide(std::istream& dev,std::ostream& devO)
         std::string model;
         int aparitii=1;
     }; 
-    cerereR cr;
     std::string linie;
     std::vector<MMA> marciModele;
     while(std::getline(dev,linie))
     {        
+        cerereR cr;
         MMA mma;
-        citire(cr,linie,devO,false);
+        try
+        {
+            citire(cr,linie,devO,false);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
+        try
+        {
         mma.marca=cr.getMarca();
-        mma.model=cr.getModel();
+        mma.model=cr.getModel();        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        //std::cout<<mma.marca<<" "<<mma.model<<std::endl;
     
     auto it=std::find_if(marciModele.begin(),marciModele.end(),[&](const MMA& x)
 {
@@ -181,4 +210,7 @@ void afiseazaInvalide(std::istream& dev,std::ostream& devO)
 {
     return a.aparitii>b.aparitii;
 });
+for (const auto& x : marciModele) {
+        devO << x.marca << "," << x.model << "," << x.aparitii << "\n";
+    }
 }

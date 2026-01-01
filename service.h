@@ -78,7 +78,9 @@ void concediere(int ID);
 
 void modificaNume(std::unique_ptr<angajat>& a,std::string NumeNou);
 
-void afisareAngajati()const;
+void afisareAngajati(std::ostream& dev)const;
+void afisareAngajatiCSV(std::ostream& dev)const;
+
 
 auto getPtrteh(){return PtrTehnician;}
 auto getPtrrec(){return PtrReceptioner;}
@@ -88,6 +90,8 @@ void verificareCerere(std::ostream& dev,cerereR& cr,PQ&);
 void citireMarci(std::istream& dev);
 auto& getPosReparatii() { return posReparatii; }
 const auto& getPosReparatii() const { return posReparatii; }
+void modificaNume(int id, const std::string& numeNou);
+void inregistrareMM(std::ostream& dev);
 };
 void citireAngajat(std::istream& dev,service& s);
 void prelucrareCereri(PQ& cereri,std::ostream& fout2, std::vector<tehnician*>& teh, std::ostream& fout3);

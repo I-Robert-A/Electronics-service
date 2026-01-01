@@ -1,3 +1,4 @@
+// ======================= mainwindow.cpp =======================
 #include "mainwindow.h"
 
 #include <QVBoxLayout>
@@ -6,12 +7,12 @@
 #include <QAction>
 #include <QMessageBox>
 #include <QLabel>
-#include <QLineEdit>
 #include <QPushButton>
 #include <QPlainTextEdit>
 #include <QTimer>
 #include <QStringList>
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -37,6 +38,29 @@ void afiseazaInvalide(std::istream& dev, std::ostream& devO);
 void prelucrareCereri(PQ& cereri, std::ostream& fout2, std::vector<tehnician*>& teh, std::ostream& fout3);
 void lunga(std::istream& dev, const std::vector<tehnician*>& tehnicieni);
 void salariu(const std::vector<std::unique_ptr<angajat>>& angajati);
+
+// NOU: funcția cerută de tine
+void afisareReparate(std::ostream& dev, std::istream& devI);
+
+// =======================================================
+// terminal log helper (la fiecare buton)
+// =======================================================
+static void logBtn(const char* name) {
+    std::cout << "[UI] Click: " << name << std::endl;
+}
+
+// =======================================================
+// CSV helpers pt formatul tău cu virgule
+// =======================================================
+static QStringList splitCsvLoose(const QString& s) {
+    QStringList out = s.split(",", Qt::KeepEmptyParts);
+    for (auto& x : out) x = x.trimmed();
+    return out;
+}
+static bool startsWithRole(const QString& x) {
+    QString t = x.trimmed().toLower();
+    return (t == "tehnician" || t == "receptioner" || t == "supervizor");
+}
 
 // =======================================================
 // PIMPL
@@ -64,15 +88,15 @@ struct MainWindow::Impl {
 
         foutInvalide.open("cereriInvalide.csv");
         foutIreparabile.open("cereriIreparabile.csv");
-        foutReparate.open("cereriReparate");
+        foutReparate.open("cereriReparate.csv");
 
         if (!finCereri.is_open())   { err="Nu pot deschide cereri.csv"; return false; }
         if (!finAngajati.is_open()) { err="Nu pot deschide angajati.csv"; return false; }
         if (!finMarci.is_open())    { err="Nu pot deschide marci.csv"; return false; }
 
-        if (!foutInvalide.is_open())   { err="Nu pot crea cereriInvalide.csv"; return false; }
-        if (!foutIreparabile.is_open()){ err="Nu pot crea cereriIreparabile.csv"; return false; }
-        if (!foutReparate.is_open())   { err="Nu pot crea cereriReparate"; return false; }
+        if (!foutInvalide.is_open())    { err="Nu pot crea cereriInvalide.csv"; return false; }
+        if (!foutIreparabile.is_open()) { err="Nu pot crea cereriIreparabile.csv"; return false; }
+        if (!foutReparate.is_open())    { err="Nu pot crea cereriReparate.csv"; return false; }
 
         // init service
         citireAngajat(finAngajati, s);
@@ -97,7 +121,15 @@ struct MainWindow::Impl {
             if (linie.empty()) continue;
 
             cerereR cr;
-            citire(cr, linie, foutInvalide, true);
+            try
+            {
+                citire(cr, linie, foutInvalide, true);
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() << '\n';
+            }
+            
 
             // distribuie ID la recepționeri
             if (!rec.empty()) {
@@ -124,12 +156,14 @@ struct MainWindow::Impl {
 void MainWindow::setMode(Mode m, const QString& info, const QString& placeholder) {
     mode = m;
     lblInfo->setText(info);
+
     editInput->setPlaceholderText(placeholder);
-    editInput->clear();
+    editInput->setPlainText("");
     editInput->show();
     btnConfirm->show();
     editInput->setFocus();
 }
+
 void MainWindow::showOut(const QString& title, const QString& text) {
     outBox->appendPlainText("=== " + title + " ===");
     outBox->appendPlainText(text);
@@ -164,23 +198,6 @@ static bool parseReparaPairsUI(const QString& s,
     return true;
 }
 
-static bool parseIdCsvUI(const QString& s, std::vector<int>& out, QString& err){
-    out.clear();
-    const QString trimmed = s.trimmed();
-    if (trimmed.isEmpty()) { err="Lista ID e goală."; return false; }
-
-    const QStringList ids = trimmed.split(",", Qt::SkipEmptyParts);
-    if (ids.isEmpty()) { err="Lista ID invalidă. Ex: 1,2,10"; return false; }
-
-    for (const QString& tok : ids) {
-        bool ok=false;
-        int v = tok.trimmed().toInt(&ok);
-        if (!ok) { err="ID invalid în listă."; return false; }
-        out.push_back(v);
-    }
-    return true;
-}
-
 static bool parseIdUI(const QString& s, int& id, QString& err){
     bool ok=false;
     id = s.trimmed().toInt(&ok);
@@ -209,6 +226,25 @@ static bool parseTipMarcaModelUI(const QString& s, std::string& tip, std::string
     tip=t.toStdString(); marca=m.toStdString(); model=mo.toStdString();
     return true;
 }
+static bool parseIdNameUI(const QString& s, int& id, QString& numeNou, QString& err)
+{
+    QString in = s.trimmed();
+    if (in.isEmpty()) { err="Input gol."; return false; }
+
+    QStringList parts = in.split(";", Qt::KeepEmptyParts);
+    if (parts.size() != 2) parts = in.split(",", Qt::KeepEmptyParts);
+    if (parts.size() != 2) { err="Format: ID;NumeNou"; return false; }
+
+    bool ok=false;
+    id = parts[0].trimmed().toInt(&ok);
+    if (!ok) { err="ID invalid."; return false; }
+
+    numeNou = parts[1].trimmed();
+    if (numeNou.isEmpty()) { err="Nume gol."; return false; }
+
+    return true;
+}
+
 
 // =======================================================
 // ctor / dtor
@@ -226,7 +262,10 @@ MainWindow::MainWindow(QWidget* parent)
     root->setSpacing(10);
 
     lblInfo = new QLabel("Inițializare...", this);
-    editInput = new QLineEdit(this);
+
+    // INPUT multi-line
+    editInput = new QPlainTextEdit(this);
+    editInput->setMaximumHeight(90);
     editInput->hide();
 
     btnConfirm = new QPushButton("Confirmă", this);
@@ -273,185 +312,344 @@ MainWindow::MainWindow(QWidget* parent)
     QAction* aInvalide = mCereri->addAction("Afișează cereri invalide");
     QAction* aLive     = mCereri->addAction("Procesare LIVE ON/OFF");
 
-    QAction* aTop3  = mRapoarte->addAction("Raport: top 3 salarii (terminal)");
-    QAction* aLunga = mRapoarte->addAction("Raport: cea mai lungă lucrare (terminal)");
-    QAction* aAst   = mRapoarte->addAction("Raport: cereri în așteptare (raport=1)");
+    QAction* aTop3     = mRapoarte->addAction("Raport: top 3 salarii (terminal)");
+    QAction* aLunga    = mRapoarte->addAction("Raport: cea mai lungă lucrare (terminal)");
+    QAction* aReparate = mRapoarte->addAction("Afișează electronice reparate"); // NOU
 
     // ---- actions ----
     connect(aTeh, &QAction::triggered, this, [this]{
+        logBtn("Angajează tehnician");
         setMode(Mode::AngajareTehnician,
                 "Angajare Tehnician",
-                "Nume;Prenume;CNP;Data(dd/mm/yyyy);Oras;tip;marca|tip;marca|...\n"
-                "Ex: Popescu;Ana;2901223123461;17/07/2020;Constanta;TV;LG|frigider;Beko");
+                "tehnician,Nume,Prenume,CNP,Data(dd/mm/yyyy),Oras,tip;marca|tip;marca|...\n"
+                "Ex: tehnician,Georgescu,Mihai,5050603170065,01/02/2022,Brasov,masina de spalat;Bosch|masina de spalat;LG");
     });
+
     connect(aRec, &QAction::triggered, this, [this]{
+        logBtn("Angajează recepționer");
         setMode(Mode::AngajareReceptioner,
                 "Angajare Recepționer",
-                "Nume;Prenume;CNP;Data(dd/mm/yyyy);Oras;ID1,ID2,...\n"
-                "Ex: Bratu;Alin;1860922025806;24/05/2022;Bucuresti;1,2,10");
+                "receptioner,Nume,Prenume,CNP,Data(dd/mm/yyyy),Oras,ID1;ID2;...\n"
+                "Ex: receptioner,Bratu,Alin,1860922025806,24/05/2022,Bucuresti,1;2;10");
     });
+    connect(aTop3, &QAction::triggered, this, [this]{
+    std::ostringstream oss;
+
+    // redirecționăm cout temporar
+    auto* oldBuf = std::cout.rdbuf(oss.rdbuf());
+
+    salariu(impl->s.getAngajati());
+
+    std::cout.rdbuf(oldBuf); // restaurăm cout
+
+    showOut("Top 3 salarii", QString::fromStdString(oss.str()));
+    lblInfo->setText("Top 3 salarii afișat.");
+});
+
     connect(aSup, &QAction::triggered, this, [this]{
+        logBtn("Angajează supervizor");
         setMode(Mode::AngajareSupervizor,
                 "Angajare Supervizor",
-                "Nume;Prenume;CNP;Data(dd/mm/yyyy);Oras\n"
-                "Ex: Bratu;Alin;1860922025806;24/05/2022;Bucuresti");
+                "supervizor,Nume,Prenume,CNP,Data(dd/mm/yyyy),Oras\n"
+                "Ex: supervizor,Bratu,Alin,1860922025806,24/05/2022,Bucuresti");
     });
 
     connect(aConcediaza, &QAction::triggered, this, [this]{
+        logBtn("Concediază");
         setMode(Mode::Concediere, "Concediere", "ID\nEx: 7");
     });
 
     connect(aModNume, &QAction::triggered, this, [this]{
-        setMode(Mode::ModificaNume, "Modifică nume", "ID;NumeNou\nEx: 7;Popescu");
-    });
+    setMode(Mode::ModificaNume,
+            "Modifică nume",
+            "ID;NumeNou\nEx: 7;Popescu");
+});
 
     connect(aAddMarca, &QAction::triggered, this, [this]{
-        setMode(Mode::AdaugaMarca, "Adaugă marcă", "tip;marca\nEx: TV;Sony");
+        logBtn("Adaugă marcă");
+        setMode(Mode::AdaugaMarca, "Adaugă marcă", "tip;marca\nEx: masina de spalat;Bosch");
     });
+
     connect(aDelMarca, &QAction::triggered, this, [this]{
+        logBtn("Șterge marcă");
         setMode(Mode::StergeMarca, "Șterge marcă", "tip;marca\nEx: frigider;Beko");
     });
+
     connect(aAddModel, &QAction::triggered, this, [this]{
+        logBtn("Adaugă model");
         setMode(Mode::AdaugaModel, "Adaugă model", "tip;marca;model\nEx: TV;Sony;BraviaX90");
     });
+
     connect(aDelModel, &QAction::triggered, this, [this]{
+        logBtn("Șterge model");
         setMode(Mode::StergeModel, "Șterge model", "tip;marca;model\nEx: TV;Sony;BraviaX90");
     });
 
-    // Afișare invalide: funcție globală
+    // Afișare invalide: NU mai crăpă aplicația
     connect(aInvalide, &QAction::triggered, this, [this]{
+        logBtn("Afișează cereri invalide");
         std::ifstream dev("cereri.csv");
         if (!dev.is_open()) { QMessageBox::warning(this, "Eroare", "Nu pot deschide cereri.csv"); return; }
+
         std::ostringstream oss;
-        afiseazaInvalide(dev, oss);
-        showOut("Cererile invalide", QString::fromStdString(oss.str()));
+        try {
+            afiseazaInvalide(dev, oss);
+            showOut("Cererile invalide", QString::fromStdString(oss.str()));
+        } catch (const std::exception& ex) {
+            QString msg = QString("afiseazaInvalide a aruncat excepție: ") + ex.what();
+            lblInfo->setText(msg);
+            QMessageBox::warning(this, "Eroare", msg);
+            std::cout << "[UI] EXCEPTION afiseazaInvalide: " << ex.what() << std::endl;
+        }
     });
 
-    // LIVE: funcție globală
+    // LIVE ON/OFF
     connect(aLive, &QAction::triggered, this, [this]{
-        if (liveTimer->isActive()) { liveTimer->stop(); lblInfo->setText("LIVE: OFF"); }
-        else { liveTimer->start(); lblInfo->setText("LIVE: ON"); }
-    });
-
-    connect(aTop3, &QAction::triggered, this, [this]{
-        // trebuie să ai acces la vectorul de angajați ca parametru.
-        // dacă nu ai getter, fă unul în service (recomandat).
-        lblInfo->setText("Top 3 salarii: necesită getter la vectorul de angajați în service.");
-    });
+    if (liveTimer->isActive()) {
+        liveEnabled = false;
+        liveTimer->stop();
+        lblInfo->setText("LIVE: OFF");
+    } else {
+        liveEnabled = true;
+        liveTimer->start();
+        lblInfo->setText("LIVE: ON");
+    }
+});
 
     connect(aLunga, &QAction::triggered, this, [this]{
-        std::ifstream dev("cereri.csv");
+        logBtn("Raport lucrare lungă");
+        std::ifstream dev("cereriReparate.csv");
         if (!dev.is_open()) { QMessageBox::warning(this, "Eroare", "Nu pot deschide cereri.csv"); return; }
+        try
+        {
         lunga(dev, impl->teh);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
         lblInfo->setText("Raport lucrare lungă: executat (vezi terminal).");
     });
 
-    connect(aAst, &QAction::triggered, this, [this]{
-        raport = 1;
-        lblInfo->setText("raport=1 setat.");
-        outBox->appendPlainText("raport = 1\n");
+    // NOU: electronice reparate
+    connect(aReparate, &QAction::triggered, this, [this]{
+        logBtn("Afișează electronice reparate");
+
+        std::ifstream devI("cereriReparate.csv");
+        if (!devI.is_open()) {
+            QMessageBox::warning(this, "Eroare", "Nu pot deschide cereriReparate.csv");
+            return;
+        }
+
+        // terminal
+        afisareReparate(std::cout, devI);
+
+        // UI (recitim fișierul)
+        devI.clear();
+        devI.seekg(0);
+
+        std::ostringstream oss;
+        afisareReparate(oss, devI);
+        showOut("Electronice reparate", QString::fromStdString(oss.str()));
     });
 
     // timer tick: funcție globală
     connect(liveTimer, &QTimer::timeout, this, [this]{
-        prelucrareCereri(impl->cereri, impl->foutIreparabile, impl->teh, impl->foutReparate);
-    });
+    if (!liveEnabled) return;
+
+    if (impl->cereri.empty()) {
+        liveEnabled = false;
+        liveTimer->stop();
+        lblInfo->setText("LIVE: OFF (fără cereri)");
+        return;
+    }
+
+    prelucrareCereri(impl->cereri, impl->foutIreparabile, impl->teh, impl->foutReparate);
+
+    if (impl->cereri.empty()) {
+        liveEnabled = false;
+        liveTimer->stop();
+        lblInfo->setText("LIVE: OFF (procesare terminată)");
+    }
+}); 
 
     // Confirm
     connect(btnConfirm, &QPushButton::clicked, this, [this]{
-        const QString input = editInput->text().trimmed();
+        logBtn("Confirmă");
+
+        const QString input = editInput->toPlainText().trimmed();
         if (input.isEmpty()) { lblInfo->setText("Eroare: input gol."); return; }
 
         try {
+            // ---------------- ANGJARE (format cu virgule) ----------------
             if (mode == Mode::AngajareTehnician || mode == Mode::AngajareReceptioner || mode == Mode::AngajareSupervizor) {
-                QStringList c = input.split(";", Qt::KeepEmptyParts);
-                for (auto& x : c) x = x.trimmed();
 
-                int expected = (mode == Mode::AngajareSupervizor) ? 5 : 6;
+                QStringList c = splitCsvLoose(input);
+                if (c.isEmpty()) { lblInfo->setText("Eroare: input gol."); return; }
+
+                int offset = 0;
+                if (startsWithRole(c[0])) offset = 1;
+
+                int expected = (mode == Mode::AngajareSupervizor) ? (offset + 5) : (offset + 6);
                 if (c.size() != expected) {
-                    lblInfo->setText("Eroare: aștept " + QString::number(expected) + " câmpuri separate prin ';'.");
+                    lblInfo->setText("Eroare: format invalid. Aștept " + QString::number(expected) +
+                                     " câmpuri separate prin ',' (virgulă).");
                     return;
                 }
 
                 EmployeeData d;
                 d.lucrari = 0;
-                d.Nume    = c[0].toStdString();
-                d.Prenume = c[1].toStdString();
-                d.CNP     = c[2].toStdString();
-                d.data_A  = c[3].toStdString();
-                d.oras_D  = c[4].toStdString();
+
+                d.Nume    = c[offset + 0].toStdString();
+                d.Prenume = c[offset + 1].toStdString();
+                d.CNP     = c[offset + 2].toStdString();
+                d.data_A  = c[offset + 3].toStdString();
+                d.oras_D  = c[offset + 4].toStdString();
                 d.repara.clear();
                 d.IDuri.clear();
 
                 if (mode == Mode::AngajareTehnician) {
                     d.Post = "tehnician";
                     QString perr;
-                    if (!parseReparaPairsUI(c[5], d.repara, perr)) { lblInfo->setText("Eroare: " + perr); return; }
+                    if (!parseReparaPairsUI(c[offset + 5], d.repara, perr)) {
+                        lblInfo->setText("Eroare reparații: " + perr);
+                        return;
+                    }
                     impl->s.angajareTehnician(d);
-                } else if (mode == Mode::AngajareReceptioner) {
+                }
+                else if (mode == Mode::AngajareReceptioner) {
                     d.Post = "receptioner";
-                    QString perr;
-                    if (!parseIdCsvUI(c[5], d.IDuri, perr)) { lblInfo->setText("Eroare: " + perr); return; }
+
+                    // ID-uri într-un singur câmp, separate prin ';'
+                    QString idsField = c[offset + 5].trimmed();
+                    if (idsField.contains(',')) {
+                        lblInfo->setText("Eroare: ID-urile la recepționer trebuie într-un singur câmp, ex: 1;2;10");
+                        return;
+                    }
+
+                    idsField = idsField.replace(" ", ";");
+                    QStringList parts = idsField.split(";", Qt::SkipEmptyParts);
+
+                    std::vector<int> ids;
+                    ids.reserve(parts.size());
+                    for (const auto& p : parts) {
+                        bool ok=false;
+                        int v = p.trimmed().toInt(&ok);
+                        if (!ok) { lblInfo->setText("Eroare: ID invalid în listă."); return; }
+                        ids.push_back(v);
+                    }
+                    d.IDuri = ids;
+
                     impl->s.angajareReceptioner(d);
-                } else {
+                }
+                else {
                     d.Post = "supervizor";
                     impl->s.angajareSupervizor(d);
                 }
 
                 lblInfo->setText("OK: angajat adăugat.");
-                impl->s.afisareAngajati();
+
+                // afișare corectă (service cere ostream)
+                std::ostringstream oss;
+                impl->s.afisareAngajati(oss);
+                showOut("Lista angajați", QString::fromStdString(oss.str()));
+                impl->s.afisareAngajati(std::cout);
 
                 impl->teh = impl->s.getPtrteh();
                 impl->rec = impl->s.getPtrrec();
                 impl->sup = impl->s.getPtrsup();
             }
+
+            // ---------------- CONCEDIERE ----------------
             else if (mode == Mode::Concediere) {
                 QString perr; int id=0;
                 if (!parseIdUI(input, id, perr)) { lblInfo->setText("Eroare: " + perr); return; }
+
                 impl->s.concediere(id);
                 lblInfo->setText("OK: concediere.");
-                impl->s.afisareAngajati();
+
+                std::ostringstream oss;
+                impl->s.afisareAngajati(oss);
+                showOut("Lista angajați", QString::fromStdString(oss.str()));
+                impl->s.afisareAngajati(std::cout);
 
                 impl->teh = impl->s.getPtrteh();
                 impl->rec = impl->s.getPtrrec();
                 impl->sup = impl->s.getPtrsup();
             }
+
+            // ---------------- MODIFICA NUME ----------------
             else if (mode == Mode::ModificaNume) {
-                // aici îți trebuie un getter în service ca să găsești unique_ptr<angajat>& după ID
-                lblInfo->setText("modificaNume: trebuie getter getAngajatByIdRef(ID) în service.");
-            }
+    QString err, numeNou;
+    int id = 0;
+
+    if (!parseIdNameUI(input, id, numeNou, err)) {
+        lblInfo->setText("Eroare: " + err);
+        return;
+    }
+
+    impl->s.modificaNume(id, numeNou.toStdString());
+    lblInfo->setText("OK: nume modificat.");
+
+    std::ostringstream oss;
+    impl->s.afisareAngajati(oss);
+    showOut("Angajați", QString::fromStdString(oss.str()));
+}
+
+
+            // ---------------- MARCI ----------------
             else if (mode == Mode::AdaugaMarca || mode == Mode::StergeMarca) {
                 std::string tip, marca; QString perr;
                 if (!parseTipMarcaUI(input, tip, marca, perr)) { lblInfo->setText("Eroare: " + perr); return; }
 
-                // necesită getter getPosReparatii() în service (altfel nu compilează)
-                auto& pr = impl->s.getPosReparatii();
+                auto& pr = impl->s.getPosReparatii(); // trebuie să existe în service
                 if (mode == Mode::AdaugaMarca) impl->s.adaugareMarca(tip, marca, pr);
                 else                           impl->s.stergereMarca(tip, marca, pr);
 
                 lblInfo->setText("OK: marcă modificată.");
+                std::cout << "[UI] OK: marcă modificată (" << tip << ";" << marca << ")\n";
             }
+
+            // ---------------- MODELE ----------------
             else if (mode == Mode::AdaugaModel || mode == Mode::StergeModel) {
                 std::string tip, marca, model; QString perr;
                 if (!parseTipMarcaModelUI(input, tip, marca, model, perr)) { lblInfo->setText("Eroare: " + perr); return; }
 
-                auto& pr = impl->s.getPosReparatii();
+                auto& pr = impl->s.getPosReparatii(); // trebuie să existe în service
                 if (mode == Mode::AdaugaModel) impl->s.adaugareModel(tip, marca, model, pr);
                 else                           impl->s.stergereModel(tip, marca, model, pr);
 
                 lblInfo->setText("OK: model modificat.");
+                std::cout << "[UI] OK: model modificat (" << tip << ";" << marca << ";" << model << ")\n";
             }
+
             else {
                 lblInfo->setText("Alege o acțiune.");
             }
         }
         catch (const std::exception& ex) {
             lblInfo->setText(QString("Eroare: ") + ex.what());
+            std::cout << "[UI] EXCEPTION: " << ex.what() << std::endl;
         }
     });
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
+    try {
+        std::ofstream foutA("angajati.csv");
+        if (foutA.is_open()) {
+            impl->s.afisareAngajatiCSV(foutA);
+            foutA.close();
+        }
+            std::ofstream foutMM("marci.csv");
+            if (foutMM.is_open())
+                impl->s.inregistrareMM(foutMM);
+    } catch (...) {
+        // nu aruncăm excepții din destructor
+    }
+
     delete impl;
     impl = nullptr;
 }
+

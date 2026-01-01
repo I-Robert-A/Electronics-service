@@ -64,3 +64,6 @@ struct compare {
 };
 
 using PQ = std::priority_queue<cerereR, std::vector<cerereR>, compare>;
+
+void afisareReparate(std::ostream& ,std::istream&);
+void afiseazaInvalide(std::istream& dev,std::ostream& devO);

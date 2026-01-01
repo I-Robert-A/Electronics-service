@@ -30,6 +30,33 @@ public:
     {
         return 4000 + pretR + Prima_transport() + 200 * (getTimp_lucrat() / 3);
     }
+    void afisareCSV(std::ostream& dev)const override
+    {
+        dev<<post<<","<<nume<<","<<prenume<<","<<CNP<<","<<data_A<<","<<oras_D<<",";
+        //dev<<"tipuri si marci: ";
+        for (auto it = repara.begin(); it != repara.end(); ++it) {
+            const std::string& tip = it->first;
+            const std::set<std::string>& marci = it->second;
+
+            for (auto itM = marci.begin(); itM != marci.end(); ++itM) 
+            {
+            dev << tip << ";" << *itM;
+
+            if (std::next(itM) != marci.end()) 
+            {
+                dev << "|";
+            }
+}
+            if(std::next(it)!=repara.end())
+            {
+                dev<<"|";
+            }
+        }
+        dev<<","<<lucrari;
+        dev<<std::endl;
+
+
+    }
     void afisare(std::ostream& dev)const override
     {
         dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<lucrari<<std::endl;
@@ -44,10 +71,6 @@ public:
             }
             dev << "\n";
         }
-
-
-        dev<<std::endl;
-        dev<<"salariu: "<<calcS()<<std::endl;
     }
     void addLucrare(){lucrari++;}
     int getLucrare()const{return lucrari;}
@@ -72,6 +95,10 @@ double calcS() const override
     {
         return 4000 + 800 + Prima_transport() + 200 * (getTimp_lucrat() / 3);
     }
+    void afisareCSV(std::ostream& dev)const override
+    {
+        dev<<post<<","<<nume<<","<<prenume<<","<<CNP<<","<<data_A<<","<<oras_D<<std::endl;
+    }
     void afisare(std::ostream& dev)const override
     {
         dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
@@ -95,7 +122,22 @@ receptioner(std::string Post,std::string Nume, std::string Prenume,
     {
         return 4000 + Prima_transport() + 200 * (getTimp_lucrat() / 3);
     }
-    void afisare(std::ostream& dev)const override
+    void afisareCSV(std::ostream& dev)const override
+    {
+        dev<<post<<","<<nume<<","<<prenume<<","<<CNP<<","<<data_A<<","<<oras_D<<",";
+        auto it1 = IDuri.begin();
+
+        for (; it1 != IDuri.end(); ++it1)
+        {
+            dev << *it1;
+            if(std::next(it1)!=IDuri.end())
+            {
+                dev<<";";
+            }
+        }
+        dev<<std::endl;
+    }
+     void afisare(std::ostream& dev)const override
     {
         dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<std::endl;
         dev<<"iduri: ";
@@ -110,4 +152,5 @@ receptioner(std::string Post,std::string Nume, std::string Prenume,
         dev<<"salariu: "<<calcS()<<std::endl;
     }
     void addID(int IDA){IDuri.push_back(IDA);}
+    const std::vector<int>& getIduri()const{return IDuri;}
 };

@@ -128,3 +128,50 @@ void service::citireMarci(std::istream& dev)
         } 
     }
 }
+
+void afisareReparate(std::ostream& dev,std::istream& devI)
+{
+    std::string linie;
+    while(std::getline(devI,linie))
+    {
+        std::stringstream ss(linie);
+        std::string ID;
+        std::getline(ss,ID,',');
+        std::getline(ss,ID,',');
+        std::getline(ss,ID,',');
+        std::string tip;
+        std::getline(ss,tip,',');
+        std::string marca;
+        std::getline(ss,marca,',');
+        std::string model;
+        std::getline(ss,model,',');
+        std::string an;
+        std::getline(ss,an,',');
+        std::string pret;
+        std::getline(ss,pret,',');
+        std::string extra;
+        std::getline(ss,extra,',');
+        dev<<ID<<" "<<tip<<" "<<marca<<" "<<model<<" "<<an<<" "<<pret<<" "<<extra<<std::endl;
+    }
+}
+
+void service::inregistrareMM(std::ostream& dev)
+{
+    for(auto& it:posReparatii)
+    {
+        auto& itMarci=it.second;
+        for(auto& itmarci:itMarci)
+        {
+            dev<<it.first<<","<<itmarci.first<<",";
+            for(auto itModele=itmarci.second.begin();itModele!=itmarci.second.end();++itModele)
+            {
+                dev<<*itModele;
+                if(std::next(itModele)!=itmarci.second.end())
+                {
+                    dev<<";";
+                }
+            }
+            dev<<std::endl;
+        }
+    }
+}

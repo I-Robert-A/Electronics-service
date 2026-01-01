@@ -419,5 +419,5 @@
 /home/robert/ProiectPOO/Electronics-service/angajat.cpp
 /home/robert/ProiectPOO/Electronics-service/lucruAngajati.h
 /home/robert/ProiectPOO/Electronics-service/cerereR.cpp
-/home/robert/ProiectPOO/Electronics-service/raporturi.cpp
 /home/robert/ProiectPOO/Electronics-service/lucruElectrocasnice.cpp
+/home/robert/ProiectPOO/Electronics-service/raporturi.cpp

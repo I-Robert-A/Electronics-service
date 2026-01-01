@@ -62,7 +62,8 @@ class angajat
     std::string getOras_D()const{return oras_D;}
     virtual double calcS() const = 0;
     virtual ~angajat()= default;
-    virtual void afisare(std::ostream& dev) const =0;
+    virtual void afisareCSV(std::ostream& dev) const =0;
+    virtual void afisare(std::ostream& dev) const=0;
     int getStatus(){return status;}
     void setStatus(int x){status=status+(1*x);}
     std::string getPost(){return post;}

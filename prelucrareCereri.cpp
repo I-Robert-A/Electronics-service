@@ -2,6 +2,7 @@
 #include <thread>
 #include <chrono>
 #include<fstream>
+#include<algorithm>
 int raport = 0;
 
 void prelucrareCereri(PQ& cereri,std::ostream& fout2, std::vector<tehnician*>& teh, std::ostream& fout3)
@@ -45,6 +46,7 @@ void prelucrareCereri(PQ& cereri,std::ostream& fout2, std::vector<tehnician*>& t
                             it->setpret(0.02*cr.getPret());
                             it->setIDC(cr.getID(),it->getStatus());
                             it->setdurataC(cr.getDurata(),it->getStatus());
+                            it->addLucrare();
                             std::cout<<"tehnicianul cu ID "<<it->getID()<<" a primit cererea cu ID: "<<cr.getID()<<std::endl;
                             fout3<<cr.getDurata()<<",";
                             fout3<<it->getID()<<",";
@@ -72,6 +74,36 @@ void prelucrareCereri(PQ& cereri,std::ostream& fout2, std::vector<tehnician*>& t
         cereri.pop();
     }
 int timp=1;
+std::vector<cerereR> cereriAsteptareAlfabet;
+for (auto itC = cereriAsteptare.begin(); itC != cereriAsteptare.end(); ++itC)
+{
+        cereriAsteptareAlfabet.push_back(*itC);
+}
+    std::sort(cereriAsteptareAlfabet.begin(),cereriAsteptareAlfabet.end(),[](const cerereR& a, const cerereR& b)
+{
+    if(a.getTip()!=b.getTip())
+    {
+        return a.getTip()<b.getTip();
+    }
+    else
+    {
+        if(a.getMarca()!=b.getMarca())
+        {
+            return a.getMarca()<b.getMarca();
+        }
+        else
+        {
+            return a.getModel()<b.getModel();
+        }
+    }
+});
+std::ofstream foutAS("cereriAsteptare.csv");
+for (auto itC = cereriAsteptareAlfabet.begin(); itC != cereriAsteptareAlfabet.end(); ++itC)
+{
+    itC->afisareCSV(foutAS);
+    foutAS<<std::endl;
+}
+foutAS.close();
 while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
 {
     std::cout<<"timp: "<<timp<<std::endl;
@@ -96,6 +128,7 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
                                         it->second->setpret(0.02*(itC->getPret()));
                                         it->second->setIDC(itC->getID(),i);
                                         it->second->setdurataC(itC->getDurata(),i);
+                                        it->second->addLucrare();
                                         std::cout<<"tehnicianul "<<it->second->getID()<<"a primit cererea cu ID: "<<itC->getID()<<std::endl;
                                         fout3<<itC->getDurata()<<",";
                                         fout3<<it->second->getID()<<",";
@@ -107,6 +140,21 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
                                         }
                                         it->second->setStatus(1); 
                                         cereriAsteptare.erase(itC);
+                                        auto it = std::find_if(cereriAsteptareAlfabet.begin(),cereriAsteptareAlfabet.end(),
+                                                               [&](const cerereR& a) {
+                                                return a.getID() == itC->getID();
+                                            }
+                                            );
+
+                                        cereriAsteptareAlfabet.erase(it);
+                                        std::ofstream foutAS("cereriAsteptare.csv");
+                                        for (auto itC = cereriAsteptareAlfabet.begin(); itC != cereriAsteptareAlfabet.end(); ++itC)
+                                        {
+                                            itC->afisareCSV(foutAS);
+                                            foutAS<<std::endl;
+
+                                        }
+                                        foutAS.close();
                                         break;
                                 }
                             }
@@ -123,37 +171,6 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
             else
                 ++it;
         }
-        if(raport==1)
-        {
-            std::vector<cerereR> cereriAsteptareAlfabet;
-            for (auto itC = cereriAsteptare.begin(); itC != cereriAsteptare.end(); ++itC)
-        {
-            cereriAsteptareAlfabet.push_back(*itC);
-        }
-        std::sort(cereriAsteptareAlfabet.begin(),cereriAsteptareAlfabet.end(),[](const cerereR& a, const cerereR& b)
-    {
-        if(a.getTip()!=b.getTip())
-        {
-            return a.getTip()<b.getTip();
-        }
-        else
-        {
-            if(a.getMarca()!=b.getMarca())
-            {
-                return a.getMarca()<b.getMarca();
-            }
-            else
-            {
-                return a.getModel()<b.getModel();
-            }
-        }
-    });
-        std::ofstream foutAS("cereriAsteptare.csv");
-        for (auto itC = cereriAsteptare.begin(); itC != cereriAsteptare.end(); ++itC)
-        {
-            itC->afisareCSV(foutAS);
-        }
-        }
         std::cout<<"cereri asteptare: ";
         for (auto itC = cereriAsteptare.begin(); itC != cereriAsteptare.end(); ++itC)
         {
@@ -161,6 +178,7 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
         }
         std::cout<<std::endl;
 timp++;
+
  std::this_thread::sleep_for(std::chrono::seconds(1));
-}
+    }
 }

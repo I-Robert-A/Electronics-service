@@ -107,21 +107,28 @@ void service::modificaNume(std::unique_ptr<angajat>& a,std::string NumeNou)
     a->setNume(NumeNou);
 }
 
-void service::afisareAngajati()const
+void service::afisareAngajati(std::ostream& dev)const
 {
     for(auto& i: angajati)
     {
-        (*i).afisare(std::cout);
+        (*i).afisare(dev);
+    }
+}
+void service::afisareAngajatiCSV(std::ostream& dev)const
+{
+    for(auto& i: angajati)
+    {
+        (*i).afisareCSV(dev);
     }
 }
 
 void citireAngajat(std::istream& dev,service& s)
 {
     EmployeeData d;
-    std::map<std::string, std::set<std::string>> Repara;
     std::string linie;
         while(std::getline(dev, linie))
         {
+            std::map<std::string, std::set<std::string>> Repara;
             std::stringstream ss(linie);
             std::string post;
             std::getline(ss,post,',');
@@ -190,4 +197,15 @@ void citireAngajat(std::istream& dev,service& s)
                     s.angajareSupervizor(d);
                 }
         }
+}
+
+void service::modificaNume(int id, const std::string& numeNou)
+{
+    for (auto& a : angajati) {
+        if (a && a->getID() == id) {
+            a->setNume(numeNou);
+            return;
+        }
+    }
+    throw std::runtime_error("Nu exista angajat cu ID-ul dat.");
 }

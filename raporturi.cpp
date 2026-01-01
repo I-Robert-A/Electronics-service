@@ -30,18 +30,22 @@ void lunga(std::istream& dev, const std::vector<tehnician*>& tehnicieni)
     std::string linie;
     while(std::getline(dev,linie))
     {
-        std::stringstream ss(linie);        
-        std::string Durata;
-        std::getline(ss,Durata,',');
-        std::string ID;
-        std::getline(ss,ID,',');
-        id=std::stoi(ID);
-        durata=std::stoi(Durata);
-       // std::cout<<id<<" "<<durata;
-        if(durata>max)
+        if(!linie.empty())
         {
-            max=durata;
-            maxID=id;
+            std::stringstream ss(linie);        
+            std::string Durata;
+            std::getline(ss,Durata,',');
+            std::string ID;
+            std::getline(ss,ID,',');
+            //std::cout<<ID<<" "<<Durata<<std::endl;
+            id=std::stoi(ID);
+            durata=std::stoi(Durata);
+        // std::cout<<id<<" "<<durata;
+            if(durata>max)
+            {
+                max=durata;
+                maxID=id;
+            }
         }
     }
     //std::cout<<max<<" "<<maxID<<" ";

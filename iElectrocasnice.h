@@ -17,6 +17,11 @@ class TV: public electrocasnice
         electrocasnice::afisare(dev);
         dev<<diagonala;
     }
+    void afisareCSV(std::ostream& dev) const override
+    {
+        electrocasnice::afisareCSV(dev);
+        dev<<diagonala<<",";
+    }
     };
 
     class masinaSpalat: public electrocasnice
@@ -36,6 +41,11 @@ class TV: public electrocasnice
         electrocasnice::afisare(dev);
         dev<<greutate;
     }
+    void afisareCSV(std::ostream& dev) const override
+    {
+        electrocasnice::afisareCSV(dev);
+        dev<<greutate<<",";
+    }
     };
 
     class frigider: public electrocasnice
@@ -54,5 +64,34 @@ class TV: public electrocasnice
     {
         electrocasnice::afisare(dev);
         dev<<congelator;
+    }
+    void afisareCSV(std::ostream& dev) const override
+    {
+        electrocasnice::afisareCSV(dev);
+        dev<<congelator<<",";
+    }
+    };
+
+    class necunoscut: public electrocasnice
+{
+    double ceva;
+    public:
+    necunoscut(
+            std::string Tip,
+            std::string Marca,
+            std::string Model,
+            int An,
+            double Pret,
+            double Ceva     
+        ):electrocasnice(Tip,Marca,Model,An,Pret),ceva{Ceva}{}
+    void afisare(std::ostream& dev) const override
+    {
+        electrocasnice::afisare(dev);
+        dev<<ceva;
+    }
+    void afisareCSV(std::ostream& dev) const override
+    {
+        electrocasnice::afisareCSV(dev);
+        dev<<ceva<<",";
     }
     };

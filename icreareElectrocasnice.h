@@ -11,6 +11,7 @@ struct ElectronicData
     double Diagonala;
     double greutate;
     int congelator;
+    double ceva;
 };
 
 class icreareElectrocasnice
@@ -44,6 +45,15 @@ class Electrocasnic_MasSpalat:public icreareElectrocasnice
     std::shared_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
     {
         return std::make_shared<masinaSpalat>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.greutate);
+    }
+
+};
+class Electrocasnic_necunoscut:public icreareElectrocasnice
+{
+    public:
+    std::shared_ptr<electrocasnice> creeazaElectrocasnic(ElectronicData ed) override
+    {
+        return std::make_shared<necunoscut>(ed.tip,ed.marca,ed.model,ed.an,ed.pret,ed.ceva);
     }
 
 };
