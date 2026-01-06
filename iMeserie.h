@@ -4,6 +4,7 @@
 #include <map>
 #include<set>
 #include<array>
+#include<algorithm>
 #pragma once
 
 
@@ -16,12 +17,13 @@ private:
     std::array<int,3> IDC={0,0,0};
     std::array<int,3> durataC={0,0,0}; 
 public:
+    tehnician()=default;
     tehnician(std::string Post,
               std::string Nume, std::string Prenume,
               std::string cnp,
               std::string data,
-              std::string oras, std::map<std::string, std::set<std::string>> Repara, int Lucrari): 
-              angajat(Post,Nume,Prenume,cnp,data,oras),repara{Repara},lucrari{Lucrari}
+              std::string oras, std::map<std::string, std::set<std::string>> Repara, int Lucrari,double PretR): 
+              angajat(Post,Nume,Prenume,cnp,data,oras),repara{Repara},lucrari{Lucrari},pretR{PretR}
               {
               }
               
@@ -52,14 +54,14 @@ public:
                 dev<<"|";
             }
         }
-        dev<<","<<lucrari;
+        dev<<","<<lucrari<<","<<pretR;
         dev<<std::endl;
 
 
     }
     void afisare(std::ostream& dev)const override
     {
-        dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<lucrari<<std::endl;
+        dev<<getID()<<" "<<post<<" "<<nume<<" "<<prenume<<" "<<CNP<<" "<<data_A<<" "<<oras_D<<" "<<lucrari<<" "<<pretR<<std::endl;
         dev<<"tipuri si marci: ";
         for (auto it = repara.begin(); it != repara.end(); ++it) {
             const std::string& tip = it->first;
@@ -84,6 +86,7 @@ public:
 class supervizor : public angajat
 {
 public:
+supervizor()=default;
 supervizor(   std::string Post,
               std::string Nume, std::string Prenume,
               std::string cnp,
@@ -112,6 +115,7 @@ private:
     std::vector<int> IDuri;
 
 public:
+receptioner()=default;
 receptioner(std::string Post,std::string Nume, std::string Prenume,
               std::string cnp,
               std::string data,
@@ -151,6 +155,7 @@ receptioner(std::string Post,std::string Nume, std::string Prenume,
         dev<<std::endl;
         dev<<"salariu: "<<calcS()<<std::endl;
     }
-    void addID(int IDA){IDuri.push_back(IDA);}
+    void addID(int IDA){if (std::find(IDuri.begin(), IDuri.end(), IDA) == IDuri.end())
+        IDuri.push_back(IDA);}
     const std::vector<int>& getIduri()const{return IDuri;}
 };

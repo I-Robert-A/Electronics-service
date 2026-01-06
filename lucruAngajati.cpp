@@ -144,8 +144,10 @@ void citireAngajat(std::istream& dev,service& s)
             std::getline(ss,oras,',');
             std::string reparatii;
             std::getline(ss,reparatii,',');
-            std::string extra;
-            std::getline(ss,extra,',');       
+            std::string lucrari;
+            std::getline(ss,lucrari,',');   
+            std::string pretR;
+            std::getline(ss,pretR,',');    
             std::stringstream ss2(reparatii);
             std::string tipMarca;
             std::string marca, tip;
@@ -170,10 +172,13 @@ void citireAngajat(std::istream& dev,service& s)
             }
             
                 int lucrariI;
+                double PretR;
             if(post=="tehnician")
             {
-                if(!extra.empty())
-                    lucrariI=std::stoi(extra);
+                if(!lucrari.empty())
+                    lucrariI=std::stoi(lucrari);
+                if(!pretR.empty())
+                    PretR=std::stod(pretR);
             }
             d.Post=post;
             d.Nume=nume;
@@ -184,6 +189,7 @@ void citireAngajat(std::istream& dev,service& s)
             d.lucrari=lucrariI;
             d.oras_D=oras;
             d.repara=Repara;
+            d.pretR=PretR;
             if(post=="tehnician")
                 {
                     s.angajareTehnician(d);

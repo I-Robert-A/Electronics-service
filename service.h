@@ -4,7 +4,6 @@
 #include "cerereR.h"
 #pragma once
 
-extern int raport;
 class service{
     private:
     std::vector<std::unique_ptr<angajat>> angajati;

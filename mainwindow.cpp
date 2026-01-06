@@ -507,6 +507,7 @@ MainWindow::MainWindow(QWidget* parent)
                 d.oras_D  = c[offset + 4].toStdString();
                 d.repara.clear();
                 d.IDuri.clear();
+                d.pretR=0.0;
 
                 if (mode == Mode::AngajareTehnician) {
                     d.Post = "tehnician";

@@ -3,7 +3,7 @@
 #include <chrono>
 #include<fstream>
 #include<algorithm>
-int raport = 0;
+
 
 void prelucrareCereri(PQ& cereri,std::ostream& fout2, std::vector<tehnician*>& teh, std::ostream& fout3)
 {

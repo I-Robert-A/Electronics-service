@@ -1,12 +1,13 @@
-tehnician,Popa,Lara-Maria,5050603170065,12/01/2014,Suceava,televizor;arctic,7
-tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,11
-receptioner,Bratu,Alin,5050603170065,24/05/2022,Bucuresti,1;2;3;4;5;6;12;14;15;16;17;1;2;3;4;5;6;6;6;6;6;6;12;12;14;15;16;17;17;1;2;3;4;5;6;6;6;6;6;6;12;12;14;15;16;17;17;1;2;3;4;5;6;6;6;6;6;6;12;12;14;15;16;17;17
+tehnician,Popa,Lara-Maria,5050603170065,12/01/2014,Suceava,televizor;arctic,7,3.4
+tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,11,1.5
+receptioner,Bratu,Alin,5050603170065,24/05/2022,Bucuresti,1;2;3;4;5;6;12;14;15;16;17
 supervizor,Bratu,Alin,5050603170065,24/05/2022,Bucuresti
-tehnician,Cernat,Pastravaru,5050603170065,13/02/2024,Bucuresti,masina de spalat;samnus,30
-tehnician,Ionescu,Andrei,5050603170065,10/06/2020,Bucuresti,TV;LG|TV;Samsung,11
-tehnician,Marin,Elena,5050603170065,22/03/2019,Cluj,TV;Samsung|TV;Sony,23
-tehnician,Dumitru,Razvan,5050603170065,05/11/2021,Iasi,frigider;LG|frigider;Samsung,38
-tehnician,Stan,Ioana,5050603170065,14/09/2018,Timisoara,frigider;Beko|frigider;Samsung,5
-tehnician,Georgescu,Mihai,5050603170065,01/02/2022,Brasov,masina de spalat;Bosch|masina de spalat;LG,38
-tehnician,Petrescu,Ana,5050603170065,17/07/2020,Constanta,masina de spalat;Samsung|masina de spalat;samnus,31
-tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,5
+tehnician,Cernat,Pastravaru,5050603170065,13/02/2024,Bucuresti,masina de spalat;samnus,38,68.84
+tehnician,Ionescu,Andrei,5050603170065,10/06/2020,Bucuresti,TV;LG|TV;Samsung,11,10.3
+tehnician,Marin,Elena,5050603170065,22/03/2019,Cluj,TV;Samsung|TV;Sony,28,119.42
+tehnician,Dumitru,Razvan,5050603170065,05/11/2021,Iasi,frigider;LG|frigider;Samsung,48,101.3
+tehnician,Stan,Ioana,5050603170065,14/09/2018,Timisoara,frigider;Beko|frigider;Samsung,5,4.2
+tehnician,Georgescu,Mihai,5050603170065,01/02/2022,Brasov,masina de spalat;Bosch|masina de spalat;LG,48,303.6
+tehnician,Petrescu,Ana,5050603170065,17/07/2020,Constanta,masina de spalat;Samsung|masina de spalat;samnus,38,59.24
+tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,10,49.9
+receptioner,Bratu,Alin,5050603170065,24/05/2022,Bucuresti,2;4;6;14;16;17

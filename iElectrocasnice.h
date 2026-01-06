@@ -2,8 +2,9 @@
 
 class TV: public electrocasnice
 {
-    double diagonala;
+    double diagonala=0.0;
     public:
+    TV()=default;
     TV(
             std::string Tip,
             std::string Marca,
@@ -28,6 +29,7 @@ class TV: public electrocasnice
 {
     double greutate;
     public:
+    masinaSpalat()=default;
     masinaSpalat(
             std::string Tip,
             std::string Marca,
@@ -76,6 +78,7 @@ class TV: public electrocasnice
 {
     double ceva;
     public:
+    necunoscut()=default;
     necunoscut(
             std::string Tip,
             std::string Marca,

@@ -6,6 +6,7 @@ struct EmployeeData {
 
     std::map<std::string, std::set<std::string>> repara;   
     int lucrari;
+    double pretR;
     std::vector<int> IDuri;      
 };
 
@@ -13,13 +14,14 @@ class iAngajat
 {
     public:
     virtual std::unique_ptr<angajat> creeazaAngajat(EmployeeData)=0;
+    virtual ~iAngajat() = default;
 };
 
 class Angajat_tehnician: public iAngajat
 {
     public:
     std::unique_ptr<angajat> creeazaAngajat(EmployeeData d) override{
-        return std::make_unique<tehnician>(d.Post,d.Nume,d.Prenume,d.CNP,d.data_A,d.oras_D,d.repara,d.lucrari);
+        return std::make_unique<tehnician>(d.Post,d.Nume,d.Prenume,d.CNP,d.data_A,d.oras_D,d.repara,d.lucrari,d.pretR);
     }
 };
 class Angajat_supervizor: public iAngajat
