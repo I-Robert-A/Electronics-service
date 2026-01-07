@@ -1,12 +1,13 @@
-masina de spalat,samnus,rulu;tutu;ecoSpin
-masina de spalat,LG,f2wv;directDrive;steamPlus
-masina de spalat,Bosch,serie4;serie6;serie8
 masina de spalat,Samsung,ecobubble;addWash;aiControl
-frigider,frost,cucu;polar;arctic
-frigider,LG,gn-h702;instaview;linearCooling
+masina de spalat,Bosch,serie4;serie6;serie8
+masina de spalat,LG,f2wv;directDrive;steamPlus
+masina de spalat,samnus,rulu;tutu;ecoSpin
+frigider,Beko,rcna366;neoFrost
 frigider,Samsung,rb34;noFrost;ecoCool
-frigider,Beko,rcna366;neoFrost;harvestFresh
-TV,Lapus,xx90
-TV,LG,ciupu;lupu
-TV,Samsung,crystal;neoQLED;frame;seria7
+frigider,LG,gn-h702;instaview;linearCooling
+frigider,frost,cucu;polar;arctic
 TV,Sony,bravia;xr;oleda80
+TV,,model_fara_marca
+TV,Samsung,crystal;neoQLED;frame;seria7
+TV,racu,por
+TV,LG,ciupu;lupu;oled;nanocell

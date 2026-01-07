@@ -1,4 +1,4 @@
-// ======================= mainwindow.cpp =======================
+
 #include "mainwindow.h"
 
 #include <QVBoxLayout>
@@ -11,6 +11,7 @@
 #include <QPlainTextEdit>
 #include <QTimer>
 #include <QStringList>
+#include <QCoreApplication>
 
 #include <iostream>
 #include <fstream>
@@ -23,14 +24,10 @@
 #include <string>
 #include <stdexcept>
 
-// include-urile tale
 #include "service.h"
 #include "cerereR.h"
 
-// raport global (dacă există)
-extern int raport;
 
-// funcțiile tale globale (nu membre service!)
 void citireAngajat(std::istream& dev, service& s);
 void citire(cerereR& cr, std::string linie, std::ostream& dev, bool optiune);
 
@@ -39,19 +36,14 @@ void prelucrareCereri(PQ& cereri, std::ostream& fout2, std::vector<tehnician*>& 
 void lunga(std::istream& dev, const std::vector<tehnician*>& tehnicieni);
 void salariu(const std::vector<std::unique_ptr<angajat>>& angajati);
 
-// NOU: funcția cerută de tine
 void afisareReparate(std::ostream& dev, std::istream& devI);
 
-// =======================================================
-// terminal log helper (la fiecare buton)
-// =======================================================
+
 static void logBtn(const char* name) {
     std::cout << "[UI] Click: " << name << std::endl;
 }
 
-// =======================================================
-// CSV helpers pt formatul tău cu virgule
-// =======================================================
+
 static QStringList splitCsvLoose(const QString& s) {
     QStringList out = s.split(",", Qt::KeepEmptyParts);
     for (auto& x : out) x = x.trimmed();
@@ -62,9 +54,7 @@ static bool startsWithRole(const QString& x) {
     return (t == "tehnician" || t == "receptioner" || t == "supervizor");
 }
 
-// =======================================================
-// PIMPL
-// =======================================================
+
 struct MainWindow::Impl {
     service s;
     PQ cereri;
@@ -98,7 +88,6 @@ struct MainWindow::Impl {
         if (!foutIreparabile.is_open()) { err="Nu pot crea cereriIreparabile.csv"; return false; }
         if (!foutReparate.is_open())    { err="Nu pot crea cereriReparate.csv"; return false; }
 
-        // init service
         citireAngajat(finAngajati, s);
         s.citireMarci(finMarci);
 
@@ -107,7 +96,7 @@ struct MainWindow::Impl {
         sup = s.getPtrsup();
 
         if (teh.size() < 3 || rec.size() < 1 || sup.size() < 1) {
-            err = "Service-ul nu are destui angajați (min: 3 teh, 1 rec, 1 sup).";
+            err = "Service ul nu are destui angajati.";
             return false;
         }
 
@@ -115,7 +104,6 @@ struct MainWindow::Impl {
             return a->getLucrare() < b->getLucrare();
         });
 
-        // citește cereri și le pune în PQ
         std::string linie;
         while (std::getline(finCereri, linie)) {
             if (linie.empty()) continue;
@@ -131,7 +119,7 @@ struct MainWindow::Impl {
             }
             
 
-            // distribuie ID la recepționeri
+
             if (!rec.empty()) {
                 if (rec.size() > 1) {
                     static std::mt19937 gen(std::random_device{}());
@@ -150,9 +138,6 @@ struct MainWindow::Impl {
     }
 };
 
-// =======================================================
-// UI helpers
-// =======================================================
 void MainWindow::setMode(Mode m, const QString& info, const QString& placeholder) {
     mode = m;
     lblInfo->setText(info);
@@ -170,9 +155,7 @@ void MainWindow::showOut(const QString& title, const QString& text) {
     outBox->appendPlainText("");
 }
 
-// =======================================================
-// UI parsing helpers
-// =======================================================
+
 static bool parseReparaPairsUI(const QString& s,
                               std::map<std::string, std::set<std::string>>& repara,
                               QString& err)
@@ -246,9 +229,7 @@ static bool parseIdNameUI(const QString& s, int& id, QString& numeNou, QString& 
 }
 
 
-// =======================================================
-// ctor / dtor
-// =======================================================
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
 {
@@ -263,7 +244,6 @@ MainWindow::MainWindow(QWidget* parent)
 
     lblInfo = new QLabel("Inițializare...", this);
 
-    // INPUT multi-line
     editInput = new QPlainTextEdit(this);
     editInput->setMaximumHeight(90);
     editInput->hide();
@@ -290,7 +270,6 @@ MainWindow::MainWindow(QWidget* parent)
     }
     lblInfo->setText("Init OK.");
 
-    // Menus
     auto* mAngajare = menuBar()->addMenu("Angajare");
     auto* mAngajati = menuBar()->addMenu("Angajați");
     auto* mRep      = menuBar()->addMenu("Reparații");
@@ -316,7 +295,7 @@ MainWindow::MainWindow(QWidget* parent)
     QAction* aLunga    = mRapoarte->addAction("Raport: cea mai lungă lucrare (terminal)");
     QAction* aReparate = mRapoarte->addAction("Afișează electronice reparate"); // NOU
 
-    // ---- actions ----
+
     connect(aTeh, &QAction::triggered, this, [this]{
         logBtn("Angajează tehnician");
         setMode(Mode::AngajareTehnician,
@@ -335,12 +314,11 @@ MainWindow::MainWindow(QWidget* parent)
     connect(aTop3, &QAction::triggered, this, [this]{
     std::ostringstream oss;
 
-    // redirecționăm cout temporar
     auto* oldBuf = std::cout.rdbuf(oss.rdbuf());
 
     salariu(impl->s.getAngajati());
 
-    std::cout.rdbuf(oldBuf); // restaurăm cout
+    std::cout.rdbuf(oldBuf); 
 
     showOut("Top 3 salarii", QString::fromStdString(oss.str()));
     lblInfo->setText("Top 3 salarii afișat.");
@@ -385,10 +363,9 @@ MainWindow::MainWindow(QWidget* parent)
         setMode(Mode::StergeModel, "Șterge model", "tip;marca;model\nEx: TV;Sony;BraviaX90");
     });
 
-    // Afișare invalide: NU mai crăpă aplicația
     connect(aInvalide, &QAction::triggered, this, [this]{
         logBtn("Afișează cereri invalide");
-        std::ifstream dev("cereri.csv");
+        std::ifstream dev("cereriInvalide.csv");
         if (!dev.is_open()) { QMessageBox::warning(this, "Eroare", "Nu pot deschide cereri.csv"); return; }
 
         std::ostringstream oss;
@@ -403,7 +380,6 @@ MainWindow::MainWindow(QWidget* parent)
         }
     });
 
-    // LIVE ON/OFF
     connect(aLive, &QAction::triggered, this, [this]{
     if (liveTimer->isActive()) {
         liveEnabled = false;
@@ -431,7 +407,6 @@ MainWindow::MainWindow(QWidget* parent)
         lblInfo->setText("Raport lucrare lungă: executat (vezi terminal).");
     });
 
-    // NOU: electronice reparate
     connect(aReparate, &QAction::triggered, this, [this]{
         logBtn("Afișează electronice reparate");
 
@@ -441,10 +416,8 @@ MainWindow::MainWindow(QWidget* parent)
             return;
         }
 
-        // terminal
         afisareReparate(std::cout, devI);
 
-        // UI (recitim fișierul)
         devI.clear();
         devI.seekg(0);
 
@@ -453,7 +426,6 @@ MainWindow::MainWindow(QWidget* parent)
         showOut("Electronice reparate", QString::fromStdString(oss.str()));
     });
 
-    // timer tick: funcție globală
     connect(liveTimer, &QTimer::timeout, this, [this]{
     if (!liveEnabled) return;
 
@@ -473,7 +445,6 @@ MainWindow::MainWindow(QWidget* parent)
     }
 }); 
 
-    // Confirm
     connect(btnConfirm, &QPushButton::clicked, this, [this]{
         logBtn("Confirmă");
 
@@ -481,7 +452,6 @@ MainWindow::MainWindow(QWidget* parent)
         if (input.isEmpty()) { lblInfo->setText("Eroare: input gol."); return; }
 
         try {
-            // ---------------- ANGJARE (format cu virgule) ----------------
             if (mode == Mode::AngajareTehnician || mode == Mode::AngajareReceptioner || mode == Mode::AngajareSupervizor) {
 
                 QStringList c = splitCsvLoose(input);
@@ -521,7 +491,6 @@ MainWindow::MainWindow(QWidget* parent)
                 else if (mode == Mode::AngajareReceptioner) {
                     d.Post = "receptioner";
 
-                    // ID-uri într-un singur câmp, separate prin ';'
                     QString idsField = c[offset + 5].trimmed();
                     if (idsField.contains(',')) {
                         lblInfo->setText("Eroare: ID-urile la recepționer trebuie într-un singur câmp, ex: 1;2;10");
@@ -550,7 +519,6 @@ MainWindow::MainWindow(QWidget* parent)
 
                 lblInfo->setText("OK: angajat adăugat.");
 
-                // afișare corectă (service cere ostream)
                 std::ostringstream oss;
                 impl->s.afisareAngajati(oss);
                 showOut("Lista angajați", QString::fromStdString(oss.str()));
@@ -561,7 +529,6 @@ MainWindow::MainWindow(QWidget* parent)
                 impl->sup = impl->s.getPtrsup();
             }
 
-            // ---------------- CONCEDIERE ----------------
             else if (mode == Mode::Concediere) {
                 QString perr; int id=0;
                 if (!parseIdUI(input, id, perr)) { lblInfo->setText("Eroare: " + perr); return; }
@@ -577,9 +544,15 @@ MainWindow::MainWindow(QWidget* parent)
                 impl->teh = impl->s.getPtrteh();
                 impl->rec = impl->s.getPtrrec();
                 impl->sup = impl->s.getPtrsup();
+                if(impl->teh.size() < 3 || impl->rec.size() < 1 || impl->sup.size() < 1)
+                {
+                    std::cout << "Service ul nu are destui angajati" << std::endl;
+                    // Închidem aplicația Qt elegant
+                    QCoreApplication::quit(); 
+                    return; 
+                }
             }
 
-            // ---------------- MODIFICA NUME ----------------
             else if (mode == Mode::ModificaNume) {
     QString err, numeNou;
     int id = 0;
@@ -598,12 +571,11 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 
-            // ---------------- MARCI ----------------
             else if (mode == Mode::AdaugaMarca || mode == Mode::StergeMarca) {
                 std::string tip, marca; QString perr;
                 if (!parseTipMarcaUI(input, tip, marca, perr)) { lblInfo->setText("Eroare: " + perr); return; }
 
-                auto& pr = impl->s.getPosReparatii(); // trebuie să existe în service
+                auto& pr = impl->s.getPosReparatii();
                 if (mode == Mode::AdaugaMarca) impl->s.adaugareMarca(tip, marca, pr);
                 else                           impl->s.stergereMarca(tip, marca, pr);
 
@@ -611,12 +583,12 @@ MainWindow::MainWindow(QWidget* parent)
                 std::cout << "[UI] OK: marcă modificată (" << tip << ";" << marca << ")\n";
             }
 
-            // ---------------- MODELE ----------------
+
             else if (mode == Mode::AdaugaModel || mode == Mode::StergeModel) {
                 std::string tip, marca, model; QString perr;
                 if (!parseTipMarcaModelUI(input, tip, marca, model, perr)) { lblInfo->setText("Eroare: " + perr); return; }
 
-                auto& pr = impl->s.getPosReparatii(); // trebuie să existe în service
+                auto& pr = impl->s.getPosReparatii(); 
                 if (mode == Mode::AdaugaModel) impl->s.adaugareModel(tip, marca, model, pr);
                 else                           impl->s.stergereModel(tip, marca, model, pr);
 
@@ -647,7 +619,7 @@ MainWindow::~MainWindow()
             if (foutMM.is_open())
                 impl->s.inregistrareMM(foutMM);
     } catch (...) {
-        // nu aruncăm excepții din destructor
+        
     }
 
     delete impl;

@@ -28,7 +28,6 @@ int main() {
         service s;
         citireAngajat(fin2,s);
         s.citireMarci(fin3);
-        //s.afisareAngajati();
         
         EmployeeData d; 
         auto teh=s.getPtrteh();
@@ -43,8 +42,6 @@ int main() {
         {
             return a->getLucrare()<b->getLucrare();
         });
-        //for (auto& x : teh)
-            //x->afisare(std::cout);
         PQ cereri;
 while (std::getline(fin, linie)) {
     cerereR cr;
@@ -71,8 +68,8 @@ while (std::getline(fin, linie)) {
         else {
         if (!rec.empty()) 
         {
-            auto* r = *rec.begin();                 // primul receptioner (presupun ca rec e vector<receptioner*>)
-            const auto& ids = r->getIduri();         // ideal: getIduri() returneaza const ref
+            auto* r = *rec.begin();                 
+            const auto& ids = r->getIduri();         
 
             auto it = std::find(ids.begin(), ids.end(), cr.getID());
 
@@ -108,7 +105,6 @@ std::ifstream finIn("cereriInvalide.csv");
 afiseazaInvalide(finIn,std::cout);
 fincR.close();
 fincR.open("cereriReparate.csv");
-//afisareReparate(std::cout,fincR);
         return 0;
 
 }

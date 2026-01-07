@@ -5,28 +5,19 @@ void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
 {
             std::stringstream ss(linie);
             if (linie.empty()) {
-            if (optiune) dev << linie << "\n";
             throw std::invalid_argument("linie goala");
             }
-            std::string id;
-            std::getline(ss,id,',');
-            std::string tip;
-            std::getline(ss,tip,',');
-            std::string marca;
-            std::getline(ss,marca,',');
-            std::string model;
-            std::getline(ss,model,',');
-            std::string an;
-            std::getline(ss,an,',');
-            std::string pret;
-            std::getline(ss,pret,',');
-            std::string time;
-            std::string extra;
-            std::getline(ss,extra,',');
-            std::getline(ss,time,',');
-            std::string complexitate;
-            std::getline(ss,complexitate,',');
-            int anul=std::stoi(an);
+            std::string id,tip,marca,model,an,pret,time,extra,complexitate;
+            if(!std::getline(ss,id,',') || !std::getline(ss,tip,',') || !std::getline(ss,marca,',') || !std::getline(ss,model,',')
+            || !std::getline(ss,an,',') || !std::getline(ss,pret,',') || !std::getline(ss,extra,',') || !std::getline(ss,time,',')
+            || !std::getline(ss,complexitate,','))
+            {
+                std::cout << "Eroare format: Numar insuficient de coloane in liniaC: " << id << "\n";
+                return;
+            }
+            try
+            {
+                int anul=std::stoi(an);
             double pretul=std::stod(pret);   
             int ID=std::stoi(id);
             int Complexitate=std::stoi(complexitate);
@@ -39,13 +30,13 @@ void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
             ed.tip=tip;
             const char* formatPattern = "%d/%m/%Y %H:%M:%S";  
 
-            // Holds date-time components
             tm timeParts = {};
             timeParts.tm_isdst = -1;
-            // Parse string
-            strptime(time.c_str(), formatPattern, &timeParts);  
+            char* result = strptime(time.c_str(), formatPattern, &timeParts);
+            if (result == nullptr || *result != '\0') {
+             throw std::runtime_error("Format data invalid (" + time + ")");
+            }  
 
-            // Convert to timestamp for easy use
             time_t timestamp = mktime(&timeParts);
             if(tip=="frigider")
             {
@@ -83,7 +74,12 @@ void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
                     cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
                 }
             }
-            
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what() <<" pe liniaC"<<id<< '\n';
+                return;
+            }
         }
 
 void cerereR::afisare(std::ostream& dev)const
@@ -92,7 +88,7 @@ void cerereR::afisare(std::ostream& dev)const
 
     if (!e) {
         dev << "[electrocasnic null]\n";
-        return; // sau throw
+        return; 
     }
 
     e->afisare(dev);
@@ -110,7 +106,7 @@ void cerereR::afisareCSV(std::ostream& dev)const
 
     if (!e) {
         dev << "[electrocasnic null]\n";
-        return; // sau throw
+        return; 
     }
 
     e->afisareCSV(dev);
@@ -133,7 +129,6 @@ void service::verificareCerere(std::ostream& dev,cerereR& cr, PQ& cereri)
     if(itTip!=posReparatii.end())
     {
         auto itMarca=itTip->second.find(marca);
-        //std::cout<<itMarca->first;
         if(itMarca!=itTip->second.end())
         {
             ok=1;
@@ -153,7 +148,6 @@ void service::verificareCerere(std::ostream& dev,cerereR& cr, PQ& cereri)
     catch(const std::exception& e)
     {
         std::cout<<cr.getID();
-        //cr.afisare(dev);
         std::cerr << e.what() << '\n';
     }
     
@@ -191,7 +185,6 @@ void afiseazaInvalide(std::istream& dev,std::ostream& devO)
         {
             std::cerr << e.what() << '\n';
         }
-        //std::cout<<mma.marca<<" "<<mma.model<<std::endl;
     
     auto it=std::find_if(marciModele.begin(),marciModele.end(),[&](const MMA& x)
 {

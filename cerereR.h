@@ -26,7 +26,8 @@ class cerereR
         {
             if(complexitate>5 || complexitate<0)
             {
-                throw std::invalid_argument("complexitate neconforma");
+                throw std::invalid_argument("complexitate neconforma la id: " + std::to_string(id));
+
             }
             else if(complexitate==0)
             {

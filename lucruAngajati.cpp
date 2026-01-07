@@ -16,7 +16,10 @@ void service::angajareTehnician(const EmployeeData& d)
                 }
 
                 PtrTehnician.push_back(raw);
-                //raw->afisare(std::cout);
+            }
+            else
+            {
+                throw std::invalid_argument("angajatul nu are varsta necesara");
             }
     }
     catch(const std::exception& e)
@@ -45,6 +48,10 @@ void service::angajareReceptioner(const EmployeeData &d)
            
 
             }
+            else
+            {
+                throw std::invalid_argument("angajatul nu are varsta necesara");
+            }
     }
     catch(const std::exception& e)
     {
@@ -71,7 +78,12 @@ void service::angajareSupervizor(const EmployeeData& d)
                 PtrSupervizor.push_back(raw);
            
 
-            }           
+            }
+            else
+            {
+                throw std::invalid_argument("angajatul nu are varsta necesara");
+            }
+
 
             }
     catch(const std::exception& e)
@@ -88,7 +100,6 @@ void service::concediere(int ID)
     });
     angajat* victim = it->get();
 
-    // scoate din listele de pointeri (dacă e acolo)
     auto rm = [victim](auto& vec){
         vec.erase(std::remove(vec.begin(), vec.end(), victim), vec.end());
     };
@@ -97,7 +108,6 @@ void service::concediere(int ID)
     rm(PtrReceptioner);
     rm(PtrSupervizor);
 
-    // acum îl scoți din evidența principală -> obiectul se distruge aici
     angajati.erase(it);
 
 }
@@ -125,38 +135,34 @@ void service::afisareAngajatiCSV(std::ostream& dev)const
 void citireAngajat(std::istream& dev,service& s)
 {
     EmployeeData d;
+    int index=0;
     std::string linie;
         while(std::getline(dev, linie))
         {
+            index++;
+            if(linie.empty()) continue;
+            try
+            {
             std::map<std::string, std::set<std::string>> Repara;
+            d.lucrari = 0;
+            d.pretR = 0.0;
             std::stringstream ss(linie);
-            std::string post;
-            std::getline(ss,post,',');
-            std::string nume;
-            std::getline(ss,nume,',');
-            std::string prenume;
-            std::getline(ss,prenume,',');
-            std::string cnp;
-            std::getline(ss,cnp,',');
-            std::string time;
-            std::getline(ss,time,',');
-            std::string oras;
-            std::getline(ss,oras,',');
+            std::string post, nume,prenume,cnp,time,oras;
+            if(!std::getline(ss,post,',') || !std::getline(ss,nume,',') || !std::getline(ss,prenume,',')
+            || !std::getline(ss,cnp,',') || !std::getline(ss,time,',') || !std::getline(ss,oras,','))
+            {
+                throw std::runtime_error("Format linie invalid: coloane lipsa pe liniaA: "+std::to_string(index));
+            }
             std::string reparatii;
-            std::getline(ss,reparatii,',');
+            std::getline(ss,reparatii,',');  
             std::string lucrari;
             std::getline(ss,lucrari,',');   
             std::string pretR;
             std::getline(ss,pretR,',');    
-            std::stringstream ss2(reparatii);
             std::string tipMarca;
             std::string marca, tip;
-            while(std::getline(ss2,tipMarca,'|'))
-            {
-                std::stringstream ss3(tipMarca);
-                std::getline(ss3,tip,';');
-                std::getline(ss3,marca,';');
-                Repara[tip].insert(marca);
+            if (post != "tehnician" && post != "receptioner" && post != "supervizor") {
+                throw std::runtime_error("Post necunoscut: " + post);
             }
             std::vector <int>idI;
             if(post=="receptioner")
@@ -171,10 +177,24 @@ void citireAngajat(std::istream& dev,service& s)
                 }
             }
             
-                int lucrariI;
-                double PretR;
+                int lucrariI=0;
+                double PretR=0.0;
             if(post=="tehnician")
             {
+                if(!reparatii.empty()){
+                    std::stringstream ss2(reparatii);
+                    while(std::getline(ss2,tipMarca,'|'))
+                    {
+                        std::stringstream ss3(tipMarca);
+                        std::getline(ss3,tip,';');
+                        std::getline(ss3,marca,';');
+                        Repara[tip].insert(marca);
+                    }
+                    if (tip.empty() || marca.empty()) {
+                        std::cerr << "nu e tip sau marca"<< "\n";
+                        continue; 
+                        }
+                }
                 if(!lucrari.empty())
                     lucrariI=std::stoi(lucrari);
                 if(!pretR.empty())
@@ -201,7 +221,12 @@ void citireAngajat(std::istream& dev,service& s)
                 else
                 {
                     s.angajareSupervizor(d);
-                }
+                }   
+            }
+            catch(const std::exception& e)
+            {
+                std::cerr << e.what()<<"pe liniaA: "<<index << '\n';
+            }
         }
 }
 

@@ -46,7 +46,7 @@ void prelucrareCereri(PQ& cereri,std::ostream& fout2, std::vector<tehnician*>& t
                             it->setpret(0.02*cr.getPret());
                             it->setIDC(cr.getID(),it->getStatus());
                             it->setdurataC(cr.getDurata(),it->getStatus());
-                            it->addLucrare();
+                            it->addLucrare(cr.getDurata());
                             std::cout<<"tehnicianul cu ID "<<it->getID()<<" a primit cererea cu ID: "<<cr.getID()<<std::endl;
                             fout3<<cr.getDurata()<<",";
                             fout3<<it->getID()<<",";
@@ -128,7 +128,7 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
                                         it->second->setpret(0.02*(itC->getPret()));
                                         it->second->setIDC(itC->getID(),i);
                                         it->second->setdurataC(itC->getDurata(),i);
-                                        it->second->addLucrare();
+                                        it->second->addLucrare(itC->getDurata());
                                         std::cout<<"tehnicianul "<<it->second->getID()<<"a primit cererea cu ID: "<<itC->getID()<<std::endl;
                                         fout3<<itC->getDurata()<<",";
                                         fout3<<it->second->getID()<<",";

@@ -28,7 +28,6 @@ void service::adaugareModel(
 {
     auto itTip = posReparatii.find(tip);
     if (itTip == posReparatii.end()) {
-        //std::cout<<itTip->first;
        throw std::invalid_argument("tip nonexistent");
     }
     else
@@ -113,7 +112,6 @@ void service::citireMarci(std::istream& dev)
         std::getline(ss,modele,',');
         std::stringstream ss2(modele);
         std::string model;
-        //std::cout<<model<<" ";
         while(std::getline(ss2,model,';'))
         {
             try

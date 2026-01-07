@@ -37,10 +37,8 @@ void lunga(std::istream& dev, const std::vector<tehnician*>& tehnicieni)
             std::getline(ss,Durata,',');
             std::string ID;
             std::getline(ss,ID,',');
-            //std::cout<<ID<<" "<<Durata<<std::endl;
             id=std::stoi(ID);
             durata=std::stoi(Durata);
-        // std::cout<<id<<" "<<durata;
             if(durata>max)
             {
                 max=durata;
@@ -48,14 +46,12 @@ void lunga(std::istream& dev, const std::vector<tehnician*>& tehnicieni)
             }
         }
     }
-    //std::cout<<max<<" "<<maxID<<" ";
         if (maxID == -1) 
         {
             throw std::invalid_argument("nu a reparat nimeni nimic");
         }
     for(const auto& it:tehnicieni)
     {
-        //std::cout<<maxID<<" "<<it->getID()<<std::endl;
         if(maxID==it->getID())
         {
             it->afisare(std::cout);

@@ -37,7 +37,7 @@ bool liveEnabled = false;
     Mode mode = Mode::None;
 
     QLabel* lblInfo = nullptr;
-    QPlainTextEdit* editInput = nullptr;   // INPUT multi-line
+    QPlainTextEdit* editInput = nullptr;   
     QPushButton* btnConfirm = nullptr;
     QPlainTextEdit* outBox = nullptr;
     QTimer* liveTimer = nullptr;
