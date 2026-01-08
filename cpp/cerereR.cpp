@@ -1,5 +1,5 @@
-#include "cerereR.h"
-#include "service.h"
+#include "../headers/cerereR.h"
+#include "../headers/service.h"
 #include<iomanip>
 void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
 {

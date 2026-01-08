@@ -24,8 +24,8 @@
 #include <string>
 #include <stdexcept>
 
-#include "service.h"
-#include "cerereR.h"
+#include "../headers/service.h"
+#include "../headers/cerereR.h"
 
 
 void citireAngajat(std::istream& dev, service& s);
@@ -72,13 +72,13 @@ struct MainWindow::Impl {
     std::ofstream foutReparate;
 
     bool init(QString& err) {
-        finCereri.open("cereri.csv");
-        finAngajati.open("angajati.csv");
-        finMarci.open("marci.csv");
+        finCereri.open("../tests/cereri.csv");
+        finAngajati.open("../tests/angajati.csv");
+        finMarci.open("../tests/marci.csv");
 
-        foutInvalide.open("cereriInvalide.csv");
-        foutIreparabile.open("cereriIreparabile.csv");
-        foutReparate.open("cereriReparate.csv");
+        foutInvalide.open("../outputs/cereriInvalide.csv");
+        foutIreparabile.open("../outputs/cereriIreparabile.csv");
+        foutReparate.open("../outputs/cereriReparate.csv");
 
         if (!finCereri.is_open())   { err="Nu pot deschide cereri.csv"; return false; }
         if (!finAngajati.is_open()) { err="Nu pot deschide angajati.csv"; return false; }
@@ -365,7 +365,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(aInvalide, &QAction::triggered, this, [this]{
         logBtn("Afișează cereri invalide");
-        std::ifstream dev("cereriInvalide.csv");
+        std::ifstream dev("../outputs/cereriInvalide.csv");
         if (!dev.is_open()) { QMessageBox::warning(this, "Eroare", "Nu pot deschide cereri.csv"); return; }
 
         std::ostringstream oss;
@@ -394,8 +394,8 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(aLunga, &QAction::triggered, this, [this]{
         logBtn("Raport lucrare lungă");
-        std::ifstream dev("cereriReparate.csv");
-        if (!dev.is_open()) { QMessageBox::warning(this, "Eroare", "Nu pot deschide cereri.csv"); return; }
+        std::ifstream dev("../outputs/cereriReparate.csv");
+        if (!dev.is_open()) { QMessageBox::warning(this, "Eroare", "Nu pot deschide cereriReparate.csv"); return; }
         try
         {
         lunga(dev, impl->teh);
@@ -410,7 +410,7 @@ MainWindow::MainWindow(QWidget* parent)
     connect(aReparate, &QAction::triggered, this, [this]{
         logBtn("Afișează electronice reparate");
 
-        std::ifstream devI("cereriReparate.csv");
+        std::ifstream devI("../outputs/cereriReparate.csv");
         if (!devI.is_open()) {
             QMessageBox::warning(this, "Eroare", "Nu pot deschide cereriReparate.csv");
             return;
@@ -616,12 +616,12 @@ MainWindow::MainWindow(QWidget* parent)
 MainWindow::~MainWindow()
 {
     try {
-        std::ofstream foutA("angajati.csv");
+        std::ofstream foutA("../tests/angajati.csv");
         if (foutA.is_open()) {
             impl->s.afisareAngajatiCSV(foutA);
             foutA.close();
         }
-            std::ofstream foutMM("marci.csv");
+            std::ofstream foutMM("../tests/marci.csv");
             if (foutMM.is_open())
                 impl->s.inregistrareMM(foutMM);
     } catch (...) {

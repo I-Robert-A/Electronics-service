@@ -1,4 +1,4 @@
-#include "raporturi.h"
+#include "../headers/raporturi.h"
 void salariu(const std::vector<std::unique_ptr<angajat>>& angajati)
 {
     std::vector<const angajat*> v;

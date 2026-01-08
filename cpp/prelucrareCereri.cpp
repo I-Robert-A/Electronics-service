@@ -1,4 +1,4 @@
-#include "service.h"
+#include "../headers/service.h"
 #include <thread>
 #include <chrono>
 #include<fstream>
@@ -97,7 +97,7 @@ for (auto itC = cereriAsteptare.begin(); itC != cereriAsteptare.end(); ++itC)
         }
     }
 });
-std::ofstream foutAS("cereriAsteptare.csv");
+std::ofstream foutAS("../outputs/cereriAsteptare.csv");
 for (auto itC = cereriAsteptareAlfabet.begin(); itC != cereriAsteptareAlfabet.end(); ++itC)
 {
     itC->afisareCSV(foutAS);
@@ -147,7 +147,7 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
                                             );
 
                                         cereriAsteptareAlfabet.erase(it);
-                                        std::ofstream foutAS("cereriAsteptare.csv");
+                                        std::ofstream foutAS("../outputs/cereriAsteptare.csv");
                                         for (auto itC = cereriAsteptareAlfabet.begin(); itC != cereriAsteptareAlfabet.end(); ++itC)
                                         {
                                             itC->afisareCSV(foutAS);

@@ -1,6 +1,6 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "iAngajat.h"
+#include "../headers/iAngajat.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);

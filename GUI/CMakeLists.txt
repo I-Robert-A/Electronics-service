@@ -13,12 +13,12 @@ qt_add_executable(Qt6Hello
   mainwindow.cpp
   mainwindow.h
   mainwindow.ui
-  cerereR.cpp
-  lucruAngajati.cpp
-  lucruElectrocasnice.cpp
-  angajat.cpp
-  prelucrareCereri.cpp
-  raporturi.cpp
+  ../cpp/cerereR.cpp
+  ../cpp/lucruAngajati.cpp
+  ../cpp/lucruElectrocasnice.cpp
+  ../cpp/angajat.cpp
+  ../cpp/prelucrareCereri.cpp
+  ../cpp/raporturi.cpp
 )
 
 target_link_libraries(Qt6Hello PRIVATE Qt6::Widgets)

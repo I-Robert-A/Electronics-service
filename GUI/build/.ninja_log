@@ -1,0 +1,15 @@
+# ninja log v5
+10	8855	1767881940419962195	CMakeFiles/Qt6Hello.dir/home/robert/ProiectPOO/Electronics-service/cpp/prelucrareCereri.cpp.o	7aefe69727dbb561
+9	8382	1767881939629849874	CMakeFiles/Qt6Hello.dir/home/robert/ProiectPOO/Electronics-service/cpp/lucruElectrocasnice.cpp.o	ec30e8dfcf5abc79
+4187	5071	1767885270019145147	Qt6Hello	b0506c462434241
+6	87	1767885265039931982	/home/robert/ProiectPOO/Electronics-service/GUI/build/Qt6Hello_autogen/mocs_compilation.cpp	3664540b68eb894e
+10	5139	1767881717511288148	CMakeFiles/Qt6Hello.dir/main2.cpp.o	73ede6e18292f33
+917	1673	1767881473291930963	CMakeFiles/Qt6Hello.dir/home/robert/ProiectPOO/Electronics-service/cpp/angajat.cpp.o	5b30f467999abc4
+6	87	1767885265039931982	Qt6Hello_autogen/timestamp	3664540b68eb894e
+90	4187	1767885269138795669	CMakeFiles/Qt6Hello.dir/mainwindow.cpp.o	2a4c69ccaf4b3629
+6	87	1767885265039931982	Qt6Hello_autogen/mocs_compilation.cpp	3664540b68eb894e
+6	87	1767885265039931982	/home/robert/ProiectPOO/Electronics-service/GUI/build/Qt6Hello_autogen/timestamp	3664540b68eb894e
+8	8900	1767881943001437397	CMakeFiles/Qt6Hello.dir/home/robert/ProiectPOO/Electronics-service/cpp/lucruAngajati.cpp.o	b18e38154e5e9214
+906	4356	1767881475976897861	CMakeFiles/Qt6Hello.dir/Qt6Hello_autogen/mocs_compilation.cpp.o	270359f330fa2910
+11	8158	1767881939027783343	CMakeFiles/Qt6Hello.dir/home/robert/ProiectPOO/Electronics-service/cpp/raporturi.cpp.o	bac0c4835c77e88d
+7	8853	1767881942425666816	CMakeFiles/Qt6Hello.dir/home/robert/ProiectPOO/Electronics-service/cpp/cerereR.cpp.o	93258257a6f5425e
