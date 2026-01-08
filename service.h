@@ -73,7 +73,7 @@ void angajareReceptioner(const EmployeeData& d);
 void angajareSupervizor(const EmployeeData& d);
 
 
-void concediere(int ID);
+bool concediere(int ID);
 
 void modificaNume(std::unique_ptr<angajat>& a,std::string NumeNou);
 

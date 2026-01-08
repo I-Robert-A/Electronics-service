@@ -92,12 +92,17 @@ void service::angajareSupervizor(const EmployeeData& d)
     }
 }
 
-void service::concediere(int ID)
+bool service::concediere(int ID)
 {
     auto it=std::find_if(angajati.begin(),angajati.end(),[ID](const std::unique_ptr<angajat>& a)
     {
         return a->getID()==ID;
     });
+    if (it == angajati.end()) 
+    {
+        std::cout << "nu exista angajatul asta" << std::endl;
+        return false;
+    }
     angajat* victim = it->get();
 
     auto rm = [victim](auto& vec){
@@ -109,7 +114,7 @@ void service::concediere(int ID)
     rm(PtrSupervizor);
 
     angajati.erase(it);
-
+    return true;
 }
 
 void service::modificaNume(std::unique_ptr<angajat>& a,std::string NumeNou)

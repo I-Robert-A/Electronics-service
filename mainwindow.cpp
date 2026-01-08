@@ -533,24 +533,30 @@ MainWindow::MainWindow(QWidget* parent)
                 QString perr; int id=0;
                 if (!parseIdUI(input, id, perr)) { lblInfo->setText("Eroare: " + perr); return; }
 
-                impl->s.concediere(id);
-                lblInfo->setText("OK: concediere.");
+                if(impl->s.concediere(id))
+                {   lblInfo->setText("OK: concediere.");
+                    std::ostringstream oss;
+                    impl->s.afisareAngajati(oss);
+                    showOut("Lista angajați", QString::fromStdString(oss.str()));
+                    impl->s.afisareAngajati(std::cout);
 
-                std::ostringstream oss;
-                impl->s.afisareAngajati(oss);
-                showOut("Lista angajați", QString::fromStdString(oss.str()));
-                impl->s.afisareAngajati(std::cout);
-
-                impl->teh = impl->s.getPtrteh();
-                impl->rec = impl->s.getPtrrec();
-                impl->sup = impl->s.getPtrsup();
-                if(impl->teh.size() < 3 || impl->rec.size() < 1 || impl->sup.size() < 1)
-                {
-                    std::cout << "Service ul nu are destui angajati" << std::endl;
-                    // Închidem aplicația Qt elegant
-                    QCoreApplication::quit(); 
-                    return; 
+                    impl->teh = impl->s.getPtrteh();
+                    impl->rec = impl->s.getPtrrec();
+                    impl->sup = impl->s.getPtrsup();
+                    if(impl->teh.size() < 3 || impl->rec.size() < 1 || impl->sup.size() < 1)
+                    {
+                        std::cout << "Service ul nu are destui angajati" << std::endl;
+                        // Închidem aplicația Qt elegant
+                        QCoreApplication::quit(); 
+                        return; 
+                    }
                 }
+                else
+                {
+                    lblInfo->setText("Nu OK: concediere.");
+                }
+
+                
             }
 
             else if (mode == Mode::ModificaNume) {
