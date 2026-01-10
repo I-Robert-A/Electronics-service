@@ -89,7 +89,15 @@ struct MainWindow::Impl {
         if (!foutReparate.is_open())    { err="Nu pot crea cereriReparate.csv"; return false; }
 
         citireAngajat(finAngajati, s);
-        s.citireMarci(finMarci);
+        try
+        {
+            s.citireMarci(finMarci);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
 
         teh = s.getPtrteh();
         rec = s.getPtrrec();
@@ -115,11 +123,12 @@ struct MainWindow::Impl {
             }
             catch(const std::exception& e)
             {
-                std::cerr << e.what() << '\n';
+                std::stringstream ss(linie);
+                std::string idtemp;
+                std::getline(ss,idtemp,',');
+                std::cerr << e.what() <<" pe liniaC "<<idtemp<< '\n';
+                continue;
             }
-            
-
-
             if (!rec.empty()) {
                 if (rec.size() > 1) {
                     static std::mt19937 gen(std::random_device{}());
@@ -130,7 +139,6 @@ struct MainWindow::Impl {
                     rec.front()->addID(cr.getID());
                 }
             }
-
             s.verificareCerere(foutInvalide, cr, cereri);
         }
 
