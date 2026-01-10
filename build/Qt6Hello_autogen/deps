@@ -1,22 +1,17 @@
 Qt6Hello_autogen/timestamp: \
 	/home/robert/ProiectPOO/Electronics-service/CMakeLists.txt \
-	/home/robert/ProiectPOO/Electronics-service/angajat.cpp \
-	/home/robert/ProiectPOO/Electronics-service/angajat.h \
+	/home/robert/ProiectPOO/Electronics-service/GUI/main2.cpp \
+	/home/robert/ProiectPOO/Electronics-service/GUI/mainwindow.cpp \
+	/home/robert/ProiectPOO/Electronics-service/GUI/mainwindow.h \
 	/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/3.28.3/CMakeCXXCompiler.cmake \
 	/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/3.28.3/CMakeSystem.cmake \
 	/home/robert/ProiectPOO/Electronics-service/build/Qt6Hello_autogen/moc_predefs.h \
-	/home/robert/ProiectPOO/Electronics-service/cerereR.cpp \
-	/home/robert/ProiectPOO/Electronics-service/cerereR.h \
-	/home/robert/ProiectPOO/Electronics-service/lucruAngajati.cpp \
-	/home/robert/ProiectPOO/Electronics-service/lucruAngajati.h \
-	/home/robert/ProiectPOO/Electronics-service/lucruElectrocasnice.cpp \
-	/home/robert/ProiectPOO/Electronics-service/lucruElectrocasnice.h \
-	/home/robert/ProiectPOO/Electronics-service/main2.cpp \
-	/home/robert/ProiectPOO/Electronics-service/mainwindow.cpp \
-	/home/robert/ProiectPOO/Electronics-service/mainwindow.h \
-	/home/robert/ProiectPOO/Electronics-service/prelucrareCereri.cpp \
-	/home/robert/ProiectPOO/Electronics-service/raporturi.cpp \
-	/home/robert/ProiectPOO/Electronics-service/raporturi.h \
+	/home/robert/ProiectPOO/Electronics-service/cpp/angajat.cpp \
+	/home/robert/ProiectPOO/Electronics-service/cpp/cerereR.cpp \
+	/home/robert/ProiectPOO/Electronics-service/cpp/lucruAngajati.cpp \
+	/home/robert/ProiectPOO/Electronics-service/cpp/lucruElectrocasnice.cpp \
+	/home/robert/ProiectPOO/Electronics-service/cpp/prelucrareCereri.cpp \
+	/home/robert/ProiectPOO/Electronics-service/cpp/raporturi.cpp \
 	/usr/include/alloca.h \
 	/usr/include/asm-generic/errno-base.h \
 	/usr/include/asm-generic/errno.h \

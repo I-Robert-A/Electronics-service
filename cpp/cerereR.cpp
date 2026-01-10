@@ -3,84 +3,76 @@
 #include<iomanip>
 void citire(cerereR& cr,std::string linie,std::ostream& dev, bool optiune)
 {
-            std::stringstream ss(linie);
-            if (linie.empty()) {
-            throw std::invalid_argument("linie goala");
-            }
-            std::string id,tip,marca,model,an,pret,time,extra,complexitate;
-            if(!std::getline(ss,id,',') || !std::getline(ss,tip,',') || !std::getline(ss,marca,',') || !std::getline(ss,model,',')
-            || !std::getline(ss,an,',') || !std::getline(ss,pret,',') || !std::getline(ss,extra,',') || !std::getline(ss,time,',')
-            || !std::getline(ss,complexitate,','))
-            {
-                std::cout << "Eroare format: Numar insuficient de coloane in liniaC: " << id << "\n";
-                return;
-            }
-            try
-            {
-                int anul=std::stoi(an);
-            double pretul=std::stod(pret);   
-            int ID=std::stoi(id);
-            int Complexitate=std::stoi(complexitate);
-            int Extra;
-            ElectronicData ed;
-            ed.an=anul;
-            ed.marca=marca;
-            ed.model=model;
-            ed.pret=pretul;
-            ed.tip=tip;
-            const char* formatPattern = "%d/%m/%Y %H:%M:%S";  
+    std::stringstream ss(linie);
+    if (linie.empty()) {
+    throw std::invalid_argument("linie goala");
+    }
+    std::string id,tip,marca,model,an,pret,time,extra,complexitate;
+    if(!std::getline(ss,id,',') || !std::getline(ss,tip,',') || !std::getline(ss,marca,',') || !std::getline(ss,model,',')
+    || !std::getline(ss,an,',') || !std::getline(ss,pret,',') || !std::getline(ss,extra,',') || !std::getline(ss,time,',')
+    || !std::getline(ss,complexitate,','))
+    {
+        std::cout << "Eroare format: Numar insuficient de coloane in liniaC: " << id << "\n";
+        return;
+    }
+    int anul=std::stoi(an);
+    double pretul=std::stod(pret);   
+    int ID=std::stoi(id);
+    int Complexitate=std::stoi(complexitate);
+    int Extra;
+    ElectronicData ed;
+    ed.an=anul;
+    ed.marca=marca;
+    ed.model=model;
+    ed.pret=pretul;
+    ed.tip=tip;
+    const char* formatPattern = "%d/%m/%Y %H:%M:%S";  
 
-            tm timeParts = {};
-            timeParts.tm_isdst = -1;
-            char* result = strptime(time.c_str(), formatPattern, &timeParts);
-            if (result == nullptr || *result != '\0') {
-             throw std::runtime_error("Format data invalid (" + time + ")");
-            }  
+    tm timeParts = {};
+    timeParts.tm_isdst = -1;
+    char* result = strptime(time.c_str(), formatPattern, &timeParts);
+    if (result == nullptr || *result != '\0') {
+        throw std::runtime_error("Format data invalid (" + time + ")");
+    }  
 
-            time_t timestamp = mktime(&timeParts);
-            if(tip=="frigider")
-            {
-                std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_frigider>();
-                ed.congelator=std::stoi(extra);
-                auto doc = ms->creeazaElectrocasnic(ed);
-                cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
-            }
-            else if(tip=="TV")
-            {
-                std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_TV>();
-                ed.Diagonala=std::stod(extra);
-                auto doc = ms->creeazaElectrocasnic(ed);
-                cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
-            }
-            else if(tip=="masina de spalat")
-            {
-                std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_MasSpalat>();
-                ed.greutate=std::stod(extra);
-                auto doc = ms->creeazaElectrocasnic(ed);
-                cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
-            }
-            else
-            {
-                if(optiune==true)
-                { 
-                    dev<<linie<<std::endl;
-                    throw std::invalid_argument("tip electrocasnic nesuportat: " + tip);
-                }
-                else
-                {
-                    std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_necunoscut>();
-                    ed.ceva=std::stod(extra);
-                    auto doc = ms->creeazaElectrocasnic(ed);
-                    cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
-                }
-            }
-            }
-            catch(const std::exception& e)
-            {
-                std::cerr << e.what() <<" pe liniaC"<<id<< '\n';
-                return;
-            }
+    time_t timestamp = mktime(&timeParts);
+    if(tip=="frigider")
+    {
+        std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_frigider>();
+        ed.congelator=std::stoi(extra);
+        auto doc = ms->creeazaElectrocasnic(ed);
+        cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
+    }
+    else if(tip=="TV")
+    {
+        std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_TV>();
+        ed.Diagonala=std::stod(extra);
+        auto doc = ms->creeazaElectrocasnic(ed);
+        cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
+    }
+    else if(tip=="masina de spalat")
+    {
+        std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_MasSpalat>();
+        ed.greutate=std::stod(extra);
+        auto doc = ms->creeazaElectrocasnic(ed);
+        cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
+    }
+    else
+    {
+        if(optiune==true)
+        { 
+            dev<<linie<<std::endl;
+            throw std::invalid_argument("tip electrocasnic nesuportat: " + tip);
         }
+        else
+        {
+            std::unique_ptr<icreareElectrocasnice> ms = std::make_unique<Electrocasnic_necunoscut>();
+            ed.ceva=std::stod(extra);
+            auto doc = ms->creeazaElectrocasnic(ed);
+            cr = cerereR(std::move(doc), timestamp, Complexitate,ID);
+        }
+    }
+}
 
 void cerereR::afisare(std::ostream& dev)const
 {

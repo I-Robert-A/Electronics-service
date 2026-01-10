@@ -183,39 +183,9 @@
 	"HEADERS" : 
 	[
 		[
-			"/home/robert/ProiectPOO/Electronics-service/angajat.h",
+			"/home/robert/ProiectPOO/Electronics-service/GUI/mainwindow.h",
 			"MU",
-			"EWIEGA46WW/moc_angajat.cpp",
-			null
-		],
-		[
-			"/home/robert/ProiectPOO/Electronics-service/cerereR.h",
-			"MU",
-			"EWIEGA46WW/moc_cerereR.cpp",
-			null
-		],
-		[
-			"/home/robert/ProiectPOO/Electronics-service/lucruAngajati.h",
-			"MU",
-			"EWIEGA46WW/moc_lucruAngajati.cpp",
-			null
-		],
-		[
-			"/home/robert/ProiectPOO/Electronics-service/lucruElectrocasnice.h",
-			"MU",
-			"EWIEGA46WW/moc_lucruElectrocasnice.cpp",
-			null
-		],
-		[
-			"/home/robert/ProiectPOO/Electronics-service/mainwindow.h",
-			"MU",
-			"EWIEGA46WW/moc_mainwindow.cpp",
-			null
-		],
-		[
-			"/home/robert/ProiectPOO/Electronics-service/raporturi.h",
-			"MU",
-			"EWIEGA46WW/moc_raporturi.cpp",
+			"2LCCYRVYXB/moc_mainwindow.cpp",
 			null
 		]
 	],
@@ -277,31 +247,43 @@
 	"SETTINGS_FILE" : "/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/Qt6Hello_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
-		[ "/home/robert/ProiectPOO/Electronics-service/angajat.cpp", "MU", null ],
-		[ "/home/robert/ProiectPOO/Electronics-service/cerereR.cpp", "MU", null ],
 		[
-			"/home/robert/ProiectPOO/Electronics-service/lucruAngajati.cpp",
+			"/home/robert/ProiectPOO/Electronics-service/GUI/main2.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/robert/ProiectPOO/Electronics-service/lucruElectrocasnice.cpp",
-			"MU",
-			null
-		],
-		[ "/home/robert/ProiectPOO/Electronics-service/main2.cpp", "MU", null ],
-		[
-			"/home/robert/ProiectPOO/Electronics-service/mainwindow.cpp",
+			"/home/robert/ProiectPOO/Electronics-service/GUI/mainwindow.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/robert/ProiectPOO/Electronics-service/prelucrareCereri.cpp",
+			"/home/robert/ProiectPOO/Electronics-service/cpp/angajat.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/robert/ProiectPOO/Electronics-service/raporturi.cpp",
+			"/home/robert/ProiectPOO/Electronics-service/cpp/cerereR.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/robert/ProiectPOO/Electronics-service/cpp/lucruAngajati.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/robert/ProiectPOO/Electronics-service/cpp/lucruElectrocasnice.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/robert/ProiectPOO/Electronics-service/cpp/prelucrareCereri.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/robert/ProiectPOO/Electronics-service/cpp/raporturi.cpp",
 			"MU",
 			null
 		]

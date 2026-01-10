@@ -114,7 +114,7 @@ while(!cereriAsteptare.empty() || !tehnicieniOcupati.empty())
                 it->second->setdurataC(it->second->getdurataC(i)-1,i);
                 if(it->second->getdurataC(i)==0 && it->second->getIDC(i)!=0)
                 {
-                    std::cout<<"tehnicianul "<<it->first<<"a terminat cererea "<<it->second->getIDC(i)<<std::endl;
+                    std::cout<<"tehnicianul "<<it->first<<" a terminat cererea "<<it->second->getIDC(i)<<std::endl;
                     it->second->setIDC(0,i);
                     it->second->setStatus(-1);
                     for (auto itC = cereriAsteptare.begin(); itC != cereriAsteptare.end(); ++itC)

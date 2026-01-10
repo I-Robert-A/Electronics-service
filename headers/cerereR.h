@@ -47,7 +47,7 @@ class cerereR
         void afisareCSV(std::ostream& dev)const;
         time_t getTime()const{return timestamp;}
         std::string getMarca() const {
-        if (!e) throw std::runtime_error("cerereR: electrocasnice null");
+        if (!e) throw std::runtime_error(" cerereR: electrocasnice null");
         return e->getMarca();
         }
         std::string getTip()const{return e->getTip();}

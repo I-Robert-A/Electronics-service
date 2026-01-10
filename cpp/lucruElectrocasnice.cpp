@@ -7,13 +7,17 @@ void service::adaugareMarca(
 {
     auto itTip = posReparatii.find(tip);
     if (itTip == posReparatii.end()) {
-       throw std::invalid_argument("tip nonexistent");
+       throw std::invalid_argument("tip nonexistent "+ tip);
     }
     else
     {
         auto& marci=itTip->second;
         if (marci.find(marca) == marci.end()) {
         marci[marca] = std::vector<std::string>{};
+    }
+    else
+    {
+        throw std::invalid_argument("marca deja existenta " + marca);
     }
     }
 
@@ -28,16 +32,16 @@ void service::adaugareModel(
 {
     auto itTip = posReparatii.find(tip);
     if (itTip == posReparatii.end()) {
-       throw std::invalid_argument("tip nonexistent");
+       throw std::invalid_argument("tip nonexistent "+ tip);
     }
     else
     {
-         auto& marci = itTip->second;
+        auto& marci = itTip->second;
         auto& modele = marci[marca]; 
 
     if (std::find(modele.begin(), modele.end(), model) != modele.end()) {
         std::cout<<model<<" ";
-        throw std::invalid_argument("model deja existent");
+        throw std::invalid_argument("model deja existent "+ model);
     }
 
     modele.push_back(model);
@@ -53,14 +57,14 @@ void service::adaugareModel(
 {
      auto itTip = posReparatii.find(tip);
     if (itTip == posReparatii.end()) {
-       throw std::invalid_argument("tip nonexistent");
+       throw std::invalid_argument("tip nonexistent "+ tip);
     }
     else
     {
         auto itMarca=itTip->second.find(marca);
         if(itMarca==itTip->second.end())
         {
-            throw std::invalid_argument("marca nonexistent");
+            throw std::invalid_argument("marca nonexistent "+ marca);
         }
         else{itTip->second.erase(marca);}
     }
@@ -75,7 +79,7 @@ void service::stergereModel(
 {
 auto itTip = posReparatii.find(tip);
     if (itTip == posReparatii.end()) {
-       throw std::invalid_argument("tip nonexistent");
+       throw std::invalid_argument("tip nonexistent "+ tip);
     }
     else
     {
@@ -83,13 +87,13 @@ auto itTip = posReparatii.find(tip);
         auto& marci=itTip->second;
         if(itMarca==itTip->second.end())
         {
-            throw std::invalid_argument("marca nonexistent");
+            throw std::invalid_argument("marca nonexistent "+ marca);
         }
         else{
             auto& modele = itMarca->second;
             auto itModel = std::find(modele.begin(), modele.end(), model);
             if (itModel == modele.end()) {
-                throw std::invalid_argument("model nonexistent");
+                throw std::invalid_argument("model nonexistent "+ model);
             }
             else
                 modele.erase(itModel);
@@ -101,28 +105,30 @@ auto itTip = posReparatii.find(tip);
 void service::citireMarci(std::istream& dev)
 {
     std::string linie;
+    int index=0;
     while(std::getline(dev,linie))
     {
-        std::string tip;
-        std::string marca;
-        std::string modele;
+        index++;
+        std::string tip,marca,modele;
         std::stringstream ss(linie);
-        std::getline(ss,tip,',');
-        std::getline(ss,marca,',');
+        if(linie.empty()){continue;}
+        if(!std::getline(ss,tip,',') || !std::getline(ss,marca,','))
+        {
+            throw std::invalid_argument("nu sunt toate coloanele completate pe liniaM "+ std::to_string(index));
+        }
         std::getline(ss,modele,',');
         std::stringstream ss2(modele);
         std::string model;
-        while(std::getline(ss2,model,';'))
-        {
-            try
+        if(!modele.empty())
+        {    
+            while(std::getline(ss2,model,';'))
             {
                 adaugareModel(tip,marca,model,posReparatii);
             }
-            catch(const std::exception& e)
-            {
-                std::cerr << e.what() << '\n';
-            }
-            
+        }
+        else
+        {
+            adaugareMarca(tip,marca,posReparatii);
         } 
     }
 }
