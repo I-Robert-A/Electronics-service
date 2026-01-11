@@ -33,7 +33,7 @@ Scop:
 
 ---
 
-## Teste pentru electrocasnice (`electrocasnice.csv`)
+## Teste pentru electrocasnice (`marci.csv`)
 
 Fișierul conține:
 - tipuri valide de electrocasnice (TV, frigider, mașină de spălat)
