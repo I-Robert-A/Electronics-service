@@ -18,8 +18,8 @@
 18,cuptor electric,Bosch,hbf113,2018,122,1,30/04/2025 17:05:00,2
 19,Bosch,hbf113,2018,122,1,30/04/2025 17:05:00,2
 20,TV,Samsung,QLED80,2021,150.5,55,10/01/2025 10:00:00,1
-21,masina de spalat,Indesit,IWS,2018,90,5,12/01/2025 09:15:00,3
-22,masina de spalat,Indesit,IWS,2018,90,5,12/01/2025 09:15:00,3
+21,TV,Samsung,QLED80,2021,150.5,55,10/01/2025 11:00:00,1
+22,masina de spalat,Beko,,2022,100,6,13/01/2025 13:00:00,1
 23,masina de spalat,Beko,,2022,100,6,13/01/2025 14:00:00,1
 24,OZN,Alien,Ship,2050,9999,0,14/01/2025 00:00:00,5
 25,TV,Sony,Bravia,2020,gratis,55,15/01/2025 12:00:00,1
@@ -49,6 +49,61 @@ sdk3,sdixcoq
 48,TV,LG,nanocell,2021,260,50,19/02/2025 09:09:09,2
 49,masina de spalat,Samsung,addWash,2020,190,8,20/02/2025 16:16:16,3
 50,TV,Samsung,seria7,2019,180,43,21/02/2025 18:18:18,2
+51,TV,LG,uhd,2020,150,43,22/02/2025 10:10:10,1
+52,frigider,Samsung,noFrost,2021,180,2,22/02/2025 11:11:11,2
+53,masina de spalat,Beko,wm610,2019,110,6,22/02/2025 12:12:12,3
+54,TV,Sony,braviaX,2022,320,55,22/02/2025 13:13:13,4
+55,cuptor electric,Electrolux,eob534,2018,95,1,22/02/2025 14:14:14,2
+56,frigider,Arctic,ad54,2017,85,1,22/02/2025 15:15:15,1
+57,masina de spalat,LG,f4wv,2023,260,9,22/02/2025 16:16:16,5
+58,TV,Samsung,crystal,2021,200,50,22/02/2025 17:17:17,2
+59,uscator de rufe,Bosch,wtw854,2020,240,8,22/02/2025 18:18:18,3
+60,frigider,Beko,neoFrost,2022,210,2,22/02/2025 19:19:19,4
+61,TV,LG,,2020,0,55,23/02/2025 10:00:00,1
+62,masina de spalat,Samsung,ecoBubble,2021,230,8,23/02/2025 11:00:00,2
+63,masina de spalat,Samsung,ecoBubble,2021,230,8,23/02/2025 11:00:00,2
+64,frigider,LG,doorCooling,2023,310,3,23/02/2025 12:00:00,5
+65,TV,Sony,oled,2023,600,65,23/02/2025 13:00:00,6
+66,cuptor electric,Bosch,,2019,120,1,23/02/2025 14:00:00,1
+67,masina de spalat vase,Beko,dfn284,2020,140,12,23/02/2025 15:00:00,3
+68,frigider,Samsung,twinCooling,2021,260,2,23/02/2025 16:00:00,4
+69,TV,LG,QNED,2024,700,75,23/02/2025 17:00:00,7
+70,TV,Samsung,LED,2015,60,32,24/02/2025 08:09:09,1
+71,TV,Samsung,LED,2015,60,32,24/02/2025 09:09:09,1
+72,frigider,Bosch,serie4,2019,190,2,24/02/2025 10:10:10,2
+73,masina de spalat,Bosch,serie8,2022,350,10,24/02/2025 11:11:11,4
+74,TV,Panasonic,tx,2020,170,40,24/02/2025 12:12:12,2
+75,frigider,Whirlpool,6thSense,2021,200,2,24/02/2025 13:13:13,3
+76,masina de spalat,LG,TurboWash,2023,290,9,24/02/2025 14:14:14,5
+77,TV,LG,nanoCell,2022,280,55,24/02/2025 15:15:15,3
+78,frigider,Arctic,ecoFreeze,2018,100,1,24/02/2025 16:16:16,1
+79,masina de spalat,Samsung,aiControl,2024,400,11,24/02/2025 17:17:17,6
+80,TV,Samsung,frame,2023,450,55,24/02/2025 18:18:18,4
+81,frigider,LG,instaView,2024,650,3,25/02/2025 10:00:00,7
+82,masina de spalat,Beko,wmx,2020,120,6,25/02/2025 11:00:00,2
+83,TV,Sony,x90,2021,330,55,25/02/2025 12:00:00,3
+84,cuptor electric,Whirlpool,akz9,2019,130,1,25/02/2025 13:00:00,2
+85,frigider,Samsung,rb38,2022,240,2,25/02/2025 14:00:00,4
+86,masina de spalat,LG,DirectDrive,2018,150,7,25/02/2025 15:00:00,3
+87,TV,LG,uhd,2017,90,43,25/02/2025 16:00:00,1
+88,frigider,Beko,rcna400,2023,280,2,25/02/2025 17:00:00,5
+89,masina de spalat,Samsung,quickDrive,2024,420,10,25/02/2025 18:00:00,6
+90,TV,Samsung,8k,2024,1200,75,25/02/2025 19:00:00,8
+91,frigider,LG,linearCooling,2021,210,2,26/02/2025 09:30:00,2
+92,masina de spalat,Bosch,serie2,2016,90,5,26/02/2025 10:30:00,1
+93,TV,Sony,bravia,2019,200,49,26/02/2025 11:30:00,2
+94,frigider,Arctic,ad54,2015,70,1,26/02/2025 12:30:00,1
+95,masina de spalat,LG,f2wv,2021,180,7,26/02/2025 13:30:00,2
+96,TV,LG,oledEvo,2023,900,65,26/02/2025 14:30:00,7
+97,frigider,Samsung,noFrost,2018,150,2,26/02/2025 15:30:00,2
+98,frigider,Samsung,noFrost,2018,150,2,26/02/2025 16:30:00,2
+99,TV,Philips,ambilight,2021,310,55,26/02/2025 17:30:00,3
+100,frigider,Bosch,serie6,2023,340,3,26/02/2025 18:30:00,5
+101,frigider,frost,ciuucu,2018,90,1,15/02/2025 21:45:00,1
+
+102,frigider,frost,ciiucu,2018,90,1,15/02/2025 22:45:00,1
+103,calorifer,frigo,loco,2011,120,4,13/05/2024 12:33:01,2 
+
 
 
 

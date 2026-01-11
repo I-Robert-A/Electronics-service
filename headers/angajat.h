@@ -31,11 +31,11 @@ class angajat
           {
             if(nume.size()<3 || nume.size()>30)
             {
-                throw std::invalid_argument("Numele trebuie sa aiba intre 3 si 30 de caractere");
+                throw std::invalid_argument("Numele "+ nume +" trebuie sa aiba intre 3 si 30 de caractere");
             }
             if(prenume.size()<3 || prenume.size()>30)
             {
-                throw std::invalid_argument("Numele trebuie sa aiba intre 3 si 30 de caractere");
+                throw std::invalid_argument("PreNumele "+prenume+" trebuie sa aiba intre 3 si 30 de caractere");
             }
             std::string control="279146358279";
             int suma=0;
@@ -44,8 +44,13 @@ class angajat
                 suma=suma+((control[i]-'0')*(CNP[i]-'0'));
             }
                 suma=suma%11;
+            int cifraControl;
+            if (suma == 10)
+                cifraControl = 1;
+            else
+                cifraControl = suma;
 
-            if(CNP[12]-'0'!=suma)
+            if(CNP[12]-'0'!=cifraControl)
             {
                 std::cout<<id;
                 throw std::invalid_argument("CNP invalid");

@@ -114,7 +114,8 @@ void service::citireMarci(std::istream& dev)
         if(linie.empty()){continue;}
         if(!std::getline(ss,tip,',') || !std::getline(ss,marca,','))
         {
-            throw std::invalid_argument("nu sunt toate coloanele completate pe liniaM "+ std::to_string(index));
+            std::cerr << "LinieM invalida: " << index << '\n';
+            continue;
         }
         std::getline(ss,modele,',');
         std::stringstream ss2(modele);
@@ -123,12 +124,30 @@ void service::citireMarci(std::istream& dev)
         {    
             while(std::getline(ss2,model,';'))
             {
-                adaugareModel(tip,marca,model,posReparatii);
+                try
+                {
+                    adaugareModel(tip, marca, model, posReparatii);
+                }
+                catch (const std::exception& e)
+                {
+                    std::cerr 
+                        << "Eroare model pe liniaM " << index 
+                        << ": " << e.what() << '\n';
+                }
             }
         }
         else
         {
-            adaugareMarca(tip,marca,posReparatii);
+            try
+                {
+                    adaugareMarca(tip, marca, posReparatii);
+                }
+                catch (const std::exception& e)
+                {
+                    std::cerr 
+                        << "Eroare model pe liniaM " << index 
+                        << ": " << e.what() << '\n';
+                }
         } 
     }
 }

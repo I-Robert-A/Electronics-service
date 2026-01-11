@@ -1,12 +1,27 @@
-tehnician,Popa,Lara-Maria,5050603170065,12/01/2014,Suceava,televizor;arctic,0,3.4
-tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,14,122.3
-receptioner,Bratu,Alin,5050603170065,24/05/2022,Bucuresti,1;2;3;4;5;6;12;14;15;16;17;21;22;23;31;32;20;30;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50
-tehnician,Cernat,Pastravaru,5050603170065,13/02/2024,Bucuresti,masina de spalat;samnus,14,223.24
-tehnician,Ionescu,Andrei,5050603170065,10/06/2020,Bucuresti,TV;LG|TV;Samsung,24,193.86
-tehnician,Marin,Elena,5050603170065,22/03/2019,Cluj,TV;Samsung|TV;Sony,20,351.1
-tehnician,Lacau,Razvan,5050603170065,05/11/2021,Iasi,frigider;LG|frigider;Samsung,36,358.1
-tehnician,Stan,Ioana,5050603170065,14/09/2018,Timisoara,frigider;Beko|frigider;Samsung,30,217.2
-tehnician,Georgescu,Mihai,5050603170065,01/02/2022,Brasov,masina de spalat;Bosch|masina de spalat;LG,70,924
-tehnician,Petrescu,Ana,5050603170065,17/07/2020,Constanta,masina de spalat;Samsung|masina de spalat;samnus,42,0
-tehnician,Luca,Pastravaru,5050603170065,13/02/2024,Bucuresti,TV;LG|frigider;frost,15,116.3
-supervizor,Ziuc,LacuSAri,5070622111009,23/01/2021,Cracovia
+tehnician,Popa,Lara-Maria,1981203188519,12/01/2014,Suceava,televizor;arctic,0,0
+tehnician,Luca,Pastravaru,1981203188535,13/02/2024,Bucuresti,TV;LG|frigider;frost,0,0
+receptioner,Bratu,Alin,1981203187795,24/05/2022,Bucuresti,1;2;3;4;5;6;12;14;15;16;17;21;22;23;31;32;20;30;33;34;35;36;37;38;39;40;41;42;43;44;45;46;47;48;49;50;51;52;53;54;56;57;58;60;61;62;63;64;68;70;71;72;73;74;75;76;77;78;80;82;83;85;86;87;88;91;92;93;94;95;97;98;99;100
+tehnician,Cernat,Pastravaru,1981203188051,13/02/2024,Bucuresti,masina de spalat;samnus,0,0
+tehnician,Ionescu,Andrei,1981203184036,10/06/2020,Bucuresti,TV;LG|TV;Samsung,0,0
+tehnician,Marin,Elena,1981203181866,22/03/2019,Cluj,TV;Samsung|TV;Sony,0,0
+tehnician,Lacau,Razvan,1981203188973,05/11/2021,Iasi,frigider;LG|frigider;Samsung,0,0
+tehnician,Stan,Ioana,1981203184845,14/09/2018,Timisoara,frigider;Beko|frigider;Samsung,0,0
+tehnician,Georgescu,Mihai,1981203180100,01/02/2022,Brasov,masina de spalat;Bosch|masina de spalat;LG,0,0
+tehnician,Petrescu,Ana,1981203181452,17/07/2020,Constanta,masina de spalat;Samsung|masina de spalat;samnus,0,0
+tehnician,Luca,Pastravaru,1981203188041,13/02/2024,Bucuresti,TV;LG|frigider;frost,0,0
+supervizor,Ziuc,LacuSAri,1981203189967,23/01/2021,Cracovia
+tehnician,Barbu,Stefan,1990410123462,10/04/1999,Sibiu,frigider;Beko,0,0
+tehnician,Popescu,Daniel,1960523123457,23/05/1996,Bucuresti,TV;LG|TV;Sony,0,0
+tehnician,Dumitru,Alina,1951203187838,19/11/1998,Cluj,frigider;Arctic|frigider;Beko,0,0
+receptioner,Matei,Alexandru,1951203188215,08/07/1995,Iasi,
+tehnician,Radulescu,Ioan,1951203180229,01/03/1989,Brasov,masina de spalat;Bosch|masina de spalat;Samsung,0,0
+supervizor,Neagu,Sorin,1951203181773,15/12/1980,Timisoara
+receptioner,Ilie,Monica,1951203181415,25/06/1997,Craiova,
+supervizor,Neagu,Sorin,1951273181773,15/12/1980,Timisoara
+
+supervizor,Neagu,Sorin,5141203189161,15/12/1980,Timisoara
+supervizor,Neagu,Sorin,5141209161,15/12/1980,Timisoara
+supervizor,N,Sorin,1951273181773,15/12/1880,Timisoara
+
+
+

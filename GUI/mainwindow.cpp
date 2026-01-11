@@ -89,14 +89,7 @@ struct MainWindow::Impl {
         if (!foutReparate.is_open())    { err="Nu pot crea cereriReparate.csv"; return false; }
 
         citireAngajat(finAngajati, s);
-        try
-        {
-            s.citireMarci(finMarci);
-        }
-        catch(const std::exception& e)
-        {
-            std::cerr << e.what() << '\n';
-        }
+        s.citireMarci(finMarci);
         
 
         teh = s.getPtrteh();

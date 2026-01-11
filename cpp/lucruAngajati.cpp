@@ -19,7 +19,7 @@ void service::angajareTehnician(const EmployeeData& d)
             }
             else
             {
-                throw std::invalid_argument("angajatul nu are varsta necesara");
+                throw std::invalid_argument("angajatul "+ d.CNP+ " nu are varsta necesara");
             }
     }
     catch(const std::exception& e)
@@ -50,7 +50,7 @@ void service::angajareReceptioner(const EmployeeData &d)
             }
             else
             {
-                throw std::invalid_argument("angajatul nu are varsta necesara");
+                throw std::invalid_argument("angajatul "+ d.CNP+" nu are varsta necesara");
             }
     }
     catch(const std::exception& e)
@@ -81,7 +81,7 @@ void service::angajareSupervizor(const EmployeeData& d)
             }
             else
             {
-                throw std::invalid_argument("angajatul nu are varsta necesara");
+                throw std::invalid_argument("angajatul "+d.CNP+" nu are varsta necesara");
             }
 
 
