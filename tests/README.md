@@ -11,9 +11,8 @@ toate problemele detectate.
 ## Structura folderului
 
 - angajati.csv – date despre angajați (valizi și invalizi)
-- electrocasnice.csv – tipuri, mărci și modele reparabile
+- marci.csv – tipuri, mărci și modele reparabile
 - cereri.csv – cereri de reparație (valide și invalide)
-- simulare.txt – date pentru testarea asignării și procesării cererilor
 - README.md – descrierea testelor
 
 ---
