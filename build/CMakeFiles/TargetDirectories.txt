@@ -1,5 +1,0 @@
-/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/Qt6Hello.dir
-/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/edit_cache.dir
-/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/rebuild_cache.dir
-/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/Qt6Hello_autogen_timestamp_deps.dir
-/home/robert/ProiectPOO/Electronics-service/build/CMakeFiles/Qt6Hello_autogen.dir
